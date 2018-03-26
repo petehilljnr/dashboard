@@ -1,0 +1,3402 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <title>RAMM Network Dashboard</title>
+    <!-- Bootstrap core CSS-->
+    <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Custom fonts for this template-->
+    <link href="vendor/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+    <link href="css/dc.css" rel="stylesheet" type="text/css">
+    <!-- Custom styles for this template-->
+    <link href="css/sb-admin.css" rel="stylesheet">
+    <!-- Stantec Tab Icon-->
+    <link rel="shortcut icon" href="/static/img/favicon/favicon.ico">
+
+    <style> .dc-chart g.row text {fill: black;} </style>
+    <style> .dc-chart .pie-slice {fill: black;} </style>
+</head>
+
+<body class="fixed-nav sticky-footer bg-dark" id="page-top">
+    <!-- Navigation-->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top" id="mainNav">
+        <a class="navbar-brand" href="#">RAMM Network Dashboard - Hastings District Council</a>
+        <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarResponsive">
+            <ul class="navbar-nav navbar-sidenav" id="exampleAccordion">
+                <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Footpaths"><a class="nav-link" href="footpaths.html"><i class="fa fa-fw fa-blind"></i><span class="nav-link-text">  Footpaths</span></a></li><li class="nav-item" data-toggle="tooltip" data-placement="right" title="Surfacing"><a class="nav-link" href="surfacing.html"><i class="fa fa-fw fa-road"></i><span class="nav-link-text">  Surfacing</span></a></li><li class="nav-item" data-toggle="tooltip" data-placement="right" title="Maintenace Cost"><a class="nav-link" href="Maintenace_cost.html"><i class="fa fa-fw fa-car"></i><span class="nav-link-text">  Maintenace Cost</span></a></li><li class="nav-item" data-toggle="tooltip" data-placement="right" title="Pavement"><a class="nav-link" href="pavement.html"><i class="fa fa-fw fa-road"></i><span class="nav-link-text">  Pavement</span></a></li><li class="nav-item active" data-toggle="tooltip" data-placement="right" title="Major Surfacing"><a class="nav-link" href="Major_Surfacing.html"><i class="fa fa-fw fa-road"></i><span class="nav-link-text">  Major Surfacing</span></a></li>
+            </ul>
+            <ul class="navbar-nav sidenav-toggler">
+                <li class="nav-item">
+                    <a class="nav-link text-center" id="sidenavToggler">
+            <i class="fa fa-fw fa-angle-left"></i>
+          </a>
+                </li>
+            </ul>
+            <ul class="navbar-nav ml-auto">
+            <li class="nav-item">
+            <img src="logo/logo.png" height="25px" >
+            </li>
+            </ul>
+        </div>
+    </nav>
+    <div class="content-wrapper">
+        <div class="container-fluid">
+            <div class="row"><div class="col-lg-6 "><div class="card mb-3"><div class="card-header"><i class="fa fa-bar-chart"></i> Major Surface Type by Length(km)</div><div class="card-body"><div id="major_surface_type" style="width: 100%;"></div></div></div></div><div class="col-lg-6 "><div class="card mb-3"><div class="card-header"><i class="fa fa-pie-chart"></i> Major Surface Type</div><div class="card-body"><div id="major_surface_type_pie" style="width: 100%;"></div></div></div></div></div><div class="row"><div class="col-lg-6 "><div class="card mb-3"><div class="card-header"><i class="fa fa-bar-chart"></i> ONRC Category by length(km)</div><div class="card-body"><div id="carrway_onrc" style="width: 100%;"></div></div></div></div><div class="col-lg-6 "><div class="card mb-3"><div class="card-header"><i class="fa fa-bar-chart"></i> Hierarchy by length(km)</div><div class="card-body"><div id="carrway_hierarchy" style="width: 100%;"></div></div></div></div></div><div class="row"><div class="col-lg-6 "><div class="card mb-3"><div class="card-header"><i class="fa fa-bar-chart"></i> Urban/Rural by length(km)</div><div class="card-body"><div id="carrway_urban_rural" style="width: 100%;"></div></div></div></div><div class="col-lg-6 "><div class="card mb-3"><div class="card-header"><i class="fa fa-bar-chart"></i> Road Type by length(km)</div><div class="card-body"><div id="carrway_road_type" style="width: 100%;"></div></div></div></div></div><div class="row"><div class="col-lg-6 "><div class="card mb-3"><div class="card-header"><i class="fa fa-bar-chart"></i> Sub Area by length(km)</div><div class="card-body"><div id="carrway_cway_area" style="width: 100%;"></div></div></div></div><div class="col-lg-6 "><div class="card mb-3"><div class="card-header"><i class="fa fa-bar-chart"></i> Asset Owner Length (km)</div><div class="card-body"><div id="carrway_asset_owner" style="width: 100%;"></div></div></div></div></div>
+        </div>
+        <!-- /.container-fluid-->
+        <!-- /.content-wrapper-->
+        <footer class="sticky-footer">
+            <div class="container">
+                <div class="text-center">
+                    <small>Stantec NZ - 2018</small>
+                </div>
+            </div>
+        </footer>
+        <!-- Scroll to Top Button-->
+        <a class="scroll-to-top rounded" href="#page-top">
+      <i class="fa fa-angle-up"></i>
+    </a>
+        <!-- Bootstrap core JavaScript-->
+        <script src="vendor/jquery/jquery.min.js"></script>
+        <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+        <!-- Core plugin JavaScript-->
+        <script src="vendor/jquery-easing/jquery.easing.min.js"></script>
+        <!-- Custom scripts for all pages-->
+        <script src="js/sb-admin.min.js"></script>
+        <script src="vendor/d3/d3.min.js"></script>
+        <script src="vendor/crossfilter/crossfilter.min.js"></script>
+        <script src="vendor/dc/dc.js"></script>
+        <!-- Custom scripts for this page-->
+        <!-- Toggle between fixed and static navbar-->
+        <script>
+        $('#toggleNavPosition').click(function() {
+            $('body').toggleClass('fixed-nav');
+            $('nav').toggleClass('fixed-top static-top');
+        });
+        </script>
+        <!-- Toggle between dark and light navbar-->
+        <script>
+        $('#toggleNavColor').click(function() {
+            $('nav').toggleClass('navbar-dark navbar-light');
+            $('nav').toggleClass('bg-dark bg-light');
+            $('body').toggleClass('bg-dark bg-light');
+        });
+        </script>
+        <script>
+        var cf;
+
+        var defs = [
+  {
+    "chart_id": "major_surface_type",
+    "dimension": "major_surface_type",
+    "aggregate": "length",
+    "chart_type": "row",
+    "height": 0,
+    "cap": 0,
+    "tick": 0
+  },
+  {
+    "chart_id": "major_surface_type_pie",
+    "dimension": "major_surface_type",
+    "aggregate": "length",
+    "chart_type": "pie",
+    "height": 0,
+    "cap": 0,
+    "tick": 0
+  },
+  {
+    "chart_id": "carrway_onrc",
+    "dimension": "onrc",
+    "aggregate": "length",
+    "chart_type": "row",
+    "height": 0,
+    "cap": 0,
+    "tick": 0
+  },
+  {
+    "chart_id": "carrway_hierarchy",
+    "dimension": "cway_hierarchy",
+    "aggregate": "length",
+    "chart_type": "row",
+    "height": 0,
+    "cap": 0,
+    "tick": 0
+  },
+  {
+    "chart_id": "carrway_urban_rural",
+    "dimension": "urban_rural",
+    "aggregate": "length",
+    "chart_type": "row",
+    "height": 0,
+    "cap": 0,
+    "tick": 0
+  },
+  {
+    "chart_id": "carrway_road_type",
+    "dimension": "road_type_desc",
+    "aggregate": "length",
+    "chart_type": "row",
+    "height": 0,
+    "cap": 0,
+    "tick": 0
+  },
+  {
+    "chart_id": "carrway_cway_area",
+    "dimension": "cway_area",
+    "aggregate": "length",
+    "chart_type": "row",
+    "height": 0,
+    "cap": 0,
+    "tick": 0
+  },
+  {
+    "chart_id": "carrway_asset_owner",
+    "dimension": "carrway_asset_owner",
+    "aggregate": "length",
+    "chart_type": "row",
+    "height": 0,
+    "cap": 0,
+    "tick": 0
+  }
+];
+        var data = [
+  {
+    "major_surface_type": "Ac Conc Ib",
+    "onrc": "Access",
+    "cway_hierarchy": "ARTERIAL",
+    "urban_rural": "Rural",
+    "road_type_desc": "Local Authority",
+    "cway_area": "Tutira",
+    "carrway_asset_owner": "Local Authority",
+    "length": 0.032
+  },
+  {
+    "major_surface_type": "Ac Conc Ib",
+    "onrc": "Access",
+    "cway_hierarchy": "LOCAL",
+    "urban_rural": "Rural",
+    "road_type_desc": "Local Authority",
+    "cway_area": "Kaweka",
+    "carrway_asset_owner": "Local Authority",
+    "length": 0.108
+  },
+  {
+    "major_surface_type": "Ac Conc Ib",
+    "onrc": "Access",
+    "cway_hierarchy": "LOCAL",
+    "urban_rural": "Rural",
+    "road_type_desc": "Local Authority",
+    "cway_area": "Poukawa",
+    "carrway_asset_owner": "Local Authority",
+    "length": 0.034
+  },
+  {
+    "major_surface_type": "Ac Conc Ib",
+    "onrc": "Access",
+    "cway_hierarchy": "LOCAL",
+    "urban_rural": "Rural",
+    "road_type_desc": "Local Authority",
+    "cway_area": "Tutira",
+    "carrway_asset_owner": "Local Authority",
+    "length": 0.193
+  },
+  {
+    "major_surface_type": "Ac Conc Ib",
+    "onrc": "Access",
+    "cway_hierarchy": "LOCAL",
+    "urban_rural": "Urban",
+    "road_type_desc": "Local Authority",
+    "cway_area": "Clive",
+    "carrway_asset_owner": "Local Authority",
+    "length": 0.106
+  },
+  {
+    "major_surface_type": "Ac Conc Ib",
+    "onrc": "Access",
+    "cway_hierarchy": "LOCAL",
+    "urban_rural": "Urban",
+    "road_type_desc": "Local Authority",
+    "cway_area": "Hastings & Flaxmere",
+    "carrway_asset_owner": "Local Authority",
+    "length": 2.483
+  },
+  {
+    "major_surface_type": "Ac Conc Ib",
+    "onrc": "Access",
+    "cway_hierarchy": "LOCAL",
+    "urban_rural": "Urban",
+    "road_type_desc": "Local Authority",
+    "cway_area": "Havelock North",
+    "carrway_asset_owner": "Local Authority",
+    "length": 2.82
+  },
+  {
+    "major_surface_type": "Ac Conc Ib",
+    "onrc": "Access",
+    "cway_hierarchy": "LOCAL",
+    "urban_rural": "Urban",
+    "road_type_desc": "Local Authority",
+    "carrway_asset_owner": "Local Authority",
+    "length": 0.031
+  },
+  {
+    "major_surface_type": "Ac Conc Ib",
+    "onrc": "Access",
+    "cway_hierarchy": "LOCAL CBD",
+    "urban_rural": "Urban",
+    "road_type_desc": "Local Authority",
+    "cway_area": "Hastings & Flaxmere",
+    "carrway_asset_owner": "Local Authority",
+    "length": 0.13
+  },
+  {
+    "major_surface_type": "Ac Conc Ib",
+    "onrc": "Access",
+    "cway_hierarchy": "LOCAL CBD",
+    "urban_rural": "Urban",
+    "road_type_desc": "Local Authority",
+    "cway_area": "Havelock North",
+    "carrway_asset_owner": "Local Authority",
+    "length": 0.004
+  },
+  {
+    "major_surface_type": "Ac Conc Ib",
+    "onrc": "Arterial",
+    "cway_hierarchy": "ARTERIAL",
+    "urban_rural": "Rural",
+    "road_type_desc": "Local Authority",
+    "cway_area": "Clive",
+    "carrway_asset_owner": "Local Authority",
+    "length": 0.26
+  },
+  {
+    "major_surface_type": "Ac Conc Ib",
+    "onrc": "Arterial",
+    "cway_hierarchy": "ARTERIAL",
+    "urban_rural": "Rural",
+    "road_type_desc": "Local Authority",
+    "cway_area": "Hastings & Flaxmere",
+    "carrway_asset_owner": "Local Authority",
+    "length": 0.031
+  },
+  {
+    "major_surface_type": "Ac Conc Ib",
+    "onrc": "Arterial",
+    "cway_hierarchy": "ARTERIAL",
+    "urban_rural": "Rural",
+    "road_type_desc": "Local Authority",
+    "cway_area": "Heretaunga",
+    "carrway_asset_owner": "Local Authority",
+    "length": 0.42
+  },
+  {
+    "major_surface_type": "Ac Conc Ib",
+    "onrc": "Arterial",
+    "cway_hierarchy": "ARTERIAL",
+    "urban_rural": "Rural",
+    "road_type_desc": "Local Authority",
+    "cway_area": "Maraekakaho",
+    "carrway_asset_owner": "Local Authority",
+    "length": 0.031
+  },
+  {
+    "major_surface_type": "Ac Conc Ib",
+    "onrc": "Arterial",
+    "cway_hierarchy": "ARTERIAL",
+    "urban_rural": "Urban",
+    "road_type_desc": "Local Authority",
+    "cway_area": "Hastings & Flaxmere",
+    "carrway_asset_owner": "Local Authority",
+    "length": 7.757
+  },
+  {
+    "major_surface_type": "Ac Conc Ib",
+    "onrc": "Arterial",
+    "cway_hierarchy": "ARTERIAL",
+    "urban_rural": "Urban",
+    "road_type_desc": "Local Authority",
+    "cway_area": "Havelock North",
+    "carrway_asset_owner": "Local Authority",
+    "length": 1.288
+  },
+  {
+    "major_surface_type": "Ac Conc Ib",
+    "onrc": "Arterial",
+    "cway_hierarchy": "ARTERIAL",
+    "urban_rural": "Urban",
+    "road_type_desc": "Local Authority",
+    "cway_area": "Heretaunga",
+    "carrway_asset_owner": "Local Authority",
+    "length": 0.634
+  },
+  {
+    "major_surface_type": "Ac Conc Ib",
+    "onrc": "Arterial",
+    "cway_hierarchy": "COLLECTOR",
+    "urban_rural": "Rural",
+    "road_type_desc": "Local Authority",
+    "cway_area": "Clive",
+    "carrway_asset_owner": "Local Authority",
+    "length": 0.064
+  },
+  {
+    "major_surface_type": "Ac Conc Ib",
+    "onrc": "Arterial",
+    "cway_hierarchy": "COLLECTOR",
+    "urban_rural": "Rural",
+    "road_type_desc": "Local Authority",
+    "cway_area": "Heretaunga",
+    "carrway_asset_owner": "Local Authority",
+    "length": 0.086
+  },
+  {
+    "major_surface_type": "Ac Conc Ib",
+    "onrc": "Arterial",
+    "cway_hierarchy": "COLLECTOR",
+    "urban_rural": "Urban",
+    "road_type_desc": "Local Authority",
+    "cway_area": "Hastings & Flaxmere",
+    "carrway_asset_owner": "Local Authority",
+    "length": 0.046
+  },
+  {
+    "major_surface_type": "Ac Conc Ib",
+    "onrc": "Arterial",
+    "cway_hierarchy": "LOCAL",
+    "urban_rural": "Rural",
+    "road_type_desc": "Local Authority",
+    "cway_area": "Clive",
+    "carrway_asset_owner": "Local Authority",
+    "length": 0.023
+  },
+  {
+    "major_surface_type": "Ac Conc Ib",
+    "onrc": "Arterial",
+    "cway_hierarchy": "REGION ARTERIAL",
+    "urban_rural": "Rural",
+    "road_type_desc": "Local Authority",
+    "cway_area": "Hastings & Flaxmere",
+    "carrway_asset_owner": "Local Authority",
+    "length": 0.096
+  },
+  {
+    "major_surface_type": "Ac Conc Ib",
+    "onrc": "Arterial",
+    "cway_hierarchy": "REGION ARTERIAL",
+    "urban_rural": "Urban",
+    "road_type_desc": "Local Authority",
+    "cway_area": "Hastings & Flaxmere",
+    "carrway_asset_owner": "Local Authority",
+    "length": 0.985
+  },
+  {
+    "major_surface_type": "Ac Conc Ib",
+    "onrc": "Arterial",
+    "cway_hierarchy": "REGION ARTERIAL",
+    "urban_rural": "Urban",
+    "road_type_desc": "Local Authority",
+    "cway_area": "Heretaunga",
+    "carrway_asset_owner": "Local Authority",
+    "length": 0.055
+  },
+  {
+    "major_surface_type": "Ac Conc Ib",
+    "onrc": "Low Volume",
+    "cway_hierarchy": "LOCAL",
+    "urban_rural": "Rural",
+    "road_type_desc": "Local Authority",
+    "cway_area": "Clive",
+    "carrway_asset_owner": "Local Authority",
+    "length": 0.007
+  },
+  {
+    "major_surface_type": "Ac Conc Ib",
+    "onrc": "Low Volume",
+    "cway_hierarchy": "LOCAL",
+    "urban_rural": "Rural",
+    "road_type_desc": "Local Authority",
+    "cway_area": "Kaweka",
+    "carrway_asset_owner": "Local Authority",
+    "length": 0.138
+  },
+  {
+    "major_surface_type": "Ac Conc Ib",
+    "onrc": "Low Volume",
+    "cway_hierarchy": "LOCAL",
+    "urban_rural": "Rural",
+    "road_type_desc": "Local Authority",
+    "cway_area": "Poukawa",
+    "carrway_asset_owner": "Local Authority",
+    "length": 0.004
+  },
+  {
+    "major_surface_type": "Ac Conc Ib",
+    "onrc": "Low Volume",
+    "cway_hierarchy": "LOCAL",
+    "urban_rural": "Rural",
+    "road_type_desc": "Local Authority",
+    "cway_area": "Tutira",
+    "carrway_asset_owner": "Local Authority",
+    "length": 0.172
+  },
+  {
+    "major_surface_type": "Ac Conc Ib",
+    "onrc": "Low Volume",
+    "cway_hierarchy": "LOCAL",
+    "urban_rural": "Urban",
+    "road_type_desc": "Local Authority",
+    "cway_area": "Clive",
+    "carrway_asset_owner": "Local Authority",
+    "length": 0.987
+  },
+  {
+    "major_surface_type": "Ac Conc Ib",
+    "onrc": "Low Volume",
+    "cway_hierarchy": "LOCAL",
+    "urban_rural": "Urban",
+    "road_type_desc": "Local Authority",
+    "cway_area": "Hastings & Flaxmere",
+    "carrway_asset_owner": "Local Authority",
+    "length": 6.196
+  },
+  {
+    "major_surface_type": "Ac Conc Ib",
+    "onrc": "Low Volume",
+    "cway_hierarchy": "LOCAL",
+    "urban_rural": "Urban",
+    "road_type_desc": "Local Authority",
+    "cway_area": "Havelock North",
+    "carrway_asset_owner": "Local Authority",
+    "length": 7.065
+  },
+  {
+    "major_surface_type": "Ac Conc Ib",
+    "onrc": "Low Volume",
+    "cway_hierarchy": "LOCAL",
+    "urban_rural": "Urban",
+    "road_type_desc": "Local Authority",
+    "cway_area": "Tutira",
+    "carrway_asset_owner": "Local Authority",
+    "length": 0.197
+  },
+  {
+    "major_surface_type": "Ac Conc Ib",
+    "onrc": "Low Volume",
+    "cway_hierarchy": "LOCAL",
+    "urban_rural": "Urban",
+    "road_type_desc": "Local Authority",
+    "carrway_asset_owner": "Local Authority",
+    "length": 1.05
+  },
+  {
+    "major_surface_type": "Ac Conc Ib",
+    "onrc": "Primary Collector",
+    "cway_hierarchy": "ARTERIAL",
+    "urban_rural": "Rural",
+    "road_type_desc": "Local Authority",
+    "cway_area": "Clive",
+    "carrway_asset_owner": "Local Authority",
+    "length": 0.444
+  },
+  {
+    "major_surface_type": "Ac Conc Ib",
+    "onrc": "Primary Collector",
+    "cway_hierarchy": "ARTERIAL",
+    "urban_rural": "Rural",
+    "road_type_desc": "Local Authority",
+    "cway_area": "Havelock North",
+    "carrway_asset_owner": "Local Authority",
+    "length": 0.058
+  },
+  {
+    "major_surface_type": "Ac Conc Ib",
+    "onrc": "Primary Collector",
+    "cway_hierarchy": "ARTERIAL",
+    "urban_rural": "Rural",
+    "road_type_desc": "Local Authority",
+    "cway_area": "Heretaunga",
+    "carrway_asset_owner": "Local Authority",
+    "length": 0.25
+  },
+  {
+    "major_surface_type": "Ac Conc Ib",
+    "onrc": "Primary Collector",
+    "cway_hierarchy": "ARTERIAL",
+    "urban_rural": "Rural",
+    "road_type_desc": "Local Authority",
+    "cway_area": "Poukawa",
+    "carrway_asset_owner": "Local Authority",
+    "length": 0.398
+  },
+  {
+    "major_surface_type": "Ac Conc Ib",
+    "onrc": "Primary Collector",
+    "cway_hierarchy": "ARTERIAL",
+    "urban_rural": "Urban",
+    "road_type_desc": "Local Authority",
+    "cway_area": "Clive",
+    "carrway_asset_owner": "Local Authority",
+    "length": 0.03
+  },
+  {
+    "major_surface_type": "Ac Conc Ib",
+    "onrc": "Primary Collector",
+    "cway_hierarchy": "ARTERIAL",
+    "urban_rural": "Urban",
+    "road_type_desc": "Local Authority",
+    "cway_area": "Hastings & Flaxmere",
+    "carrway_asset_owner": "Local Authority",
+    "length": 1.988
+  },
+  {
+    "major_surface_type": "Ac Conc Ib",
+    "onrc": "Primary Collector",
+    "cway_hierarchy": "ARTERIAL",
+    "urban_rural": "Urban",
+    "road_type_desc": "Local Authority",
+    "cway_area": "Havelock North",
+    "carrway_asset_owner": "Local Authority",
+    "length": 3.356
+  },
+  {
+    "major_surface_type": "Ac Conc Ib",
+    "onrc": "Primary Collector",
+    "cway_hierarchy": "ARTERIAL",
+    "urban_rural": "Urban",
+    "road_type_desc": "Local Authority",
+    "cway_area": "Poukawa",
+    "carrway_asset_owner": "Local Authority",
+    "length": 0.046
+  },
+  {
+    "major_surface_type": "Ac Conc Ib",
+    "onrc": "Primary Collector",
+    "cway_hierarchy": "ARTERIAL",
+    "urban_rural": "Urban",
+    "road_type_desc": "Local Authority",
+    "carrway_asset_owner": "Local Authority",
+    "length": 0.607
+  },
+  {
+    "major_surface_type": "Ac Conc Ib",
+    "onrc": "Primary Collector",
+    "cway_hierarchy": "COLLECTOR",
+    "urban_rural": "Rural",
+    "road_type_desc": "Local Authority",
+    "cway_area": "Clive",
+    "carrway_asset_owner": "Local Authority",
+    "length": 0.472
+  },
+  {
+    "major_surface_type": "Ac Conc Ib",
+    "onrc": "Primary Collector",
+    "cway_hierarchy": "COLLECTOR",
+    "urban_rural": "Rural",
+    "road_type_desc": "Local Authority",
+    "cway_area": "Heretaunga",
+    "carrway_asset_owner": "Local Authority",
+    "length": 0.312
+  },
+  {
+    "major_surface_type": "Ac Conc Ib",
+    "onrc": "Primary Collector",
+    "cway_hierarchy": "COLLECTOR",
+    "urban_rural": "Rural",
+    "road_type_desc": "Local Authority",
+    "cway_area": "Poukawa",
+    "carrway_asset_owner": "Local Authority",
+    "length": 0.113
+  },
+  {
+    "major_surface_type": "Ac Conc Ib",
+    "onrc": "Primary Collector",
+    "cway_hierarchy": "COLLECTOR",
+    "urban_rural": "Urban",
+    "road_type_desc": "Local Authority",
+    "cway_area": "Clive",
+    "carrway_asset_owner": "Local Authority",
+    "length": 0.321
+  },
+  {
+    "major_surface_type": "Ac Conc Ib",
+    "onrc": "Primary Collector",
+    "cway_hierarchy": "COLLECTOR",
+    "urban_rural": "Urban",
+    "road_type_desc": "Local Authority",
+    "cway_area": "Hastings & Flaxmere",
+    "carrway_asset_owner": "Local Authority",
+    "length": 1.83
+  },
+  {
+    "major_surface_type": "Ac Conc Ib",
+    "onrc": "Primary Collector",
+    "cway_hierarchy": "COLLECTOR",
+    "urban_rural": "Urban",
+    "road_type_desc": "Local Authority",
+    "cway_area": "Havelock North",
+    "carrway_asset_owner": "Local Authority",
+    "length": 0.72
+  },
+  {
+    "major_surface_type": "Ac Conc Ib",
+    "onrc": "Primary Collector",
+    "cway_hierarchy": "COLLECTOR",
+    "urban_rural": "Urban",
+    "road_type_desc": "Local Authority",
+    "carrway_asset_owner": "Local Authority",
+    "length": 0.195
+  },
+  {
+    "major_surface_type": "Ac Conc Ib",
+    "onrc": "Primary Collector",
+    "cway_hierarchy": "LOCAL",
+    "urban_rural": "Rural",
+    "road_type_desc": "Local Authority",
+    "cway_area": "Heretaunga",
+    "carrway_asset_owner": "Local Authority",
+    "length": 0.039
+  },
+  {
+    "major_surface_type": "Ac Conc Ib",
+    "onrc": "Primary Collector",
+    "cway_hierarchy": "LOCAL",
+    "urban_rural": "Urban",
+    "road_type_desc": "Local Authority",
+    "cway_area": "Clive",
+    "carrway_asset_owner": "Local Authority",
+    "length": 0.324
+  },
+  {
+    "major_surface_type": "Ac Conc Ib",
+    "onrc": "Primary Collector",
+    "cway_hierarchy": "LOCAL",
+    "urban_rural": "Urban",
+    "road_type_desc": "Local Authority",
+    "cway_area": "Hastings & Flaxmere",
+    "carrway_asset_owner": "Local Authority",
+    "length": 0.417
+  },
+  {
+    "major_surface_type": "Ac Conc Ib",
+    "onrc": "Primary Collector",
+    "cway_hierarchy": "LOCAL",
+    "urban_rural": "Urban",
+    "road_type_desc": "Local Authority",
+    "cway_area": "Havelock North",
+    "carrway_asset_owner": "Local Authority",
+    "length": 0.606
+  },
+  {
+    "major_surface_type": "Ac Conc Ib",
+    "onrc": "Primary Collector",
+    "cway_hierarchy": "LOCAL",
+    "urban_rural": "Urban",
+    "road_type_desc": "Local Authority",
+    "cway_area": "Heretaunga",
+    "carrway_asset_owner": "Local Authority",
+    "length": 0.029
+  },
+  {
+    "major_surface_type": "Ac Conc Ib",
+    "onrc": "Primary Collector",
+    "cway_hierarchy": "LOCAL CBD",
+    "urban_rural": "Urban",
+    "road_type_desc": "Local Authority",
+    "cway_area": "Hastings & Flaxmere",
+    "carrway_asset_owner": "Local Authority",
+    "length": 3.565
+  },
+  {
+    "major_surface_type": "Ac Conc Ib",
+    "onrc": "Primary Collector",
+    "cway_hierarchy": "LOCAL CBD",
+    "urban_rural": "Urban",
+    "road_type_desc": "Local Authority",
+    "cway_area": "Havelock North",
+    "carrway_asset_owner": "Local Authority",
+    "length": 0.525
+  },
+  {
+    "major_surface_type": "Ac Conc Ib",
+    "onrc": "Primary Collector",
+    "cway_hierarchy": "REGION ARTERIAL",
+    "urban_rural": "Rural",
+    "road_type_desc": "Local Authority",
+    "cway_area": "Heretaunga",
+    "carrway_asset_owner": "Local Authority",
+    "length": 0.342
+  },
+  {
+    "major_surface_type": "Ac Conc Ib",
+    "onrc": "Primary Collector",
+    "cway_hierarchy": "REGION ARTERIAL",
+    "urban_rural": "Rural",
+    "road_type_desc": "Local Authority",
+    "cway_area": "Poukawa",
+    "carrway_asset_owner": "Local Authority",
+    "length": 0.143
+  },
+  {
+    "major_surface_type": "Ac Conc Ib",
+    "onrc": "Primary Collector",
+    "cway_hierarchy": "REGION ARTERIAL",
+    "urban_rural": "Urban",
+    "road_type_desc": "Local Authority",
+    "cway_area": "Hastings & Flaxmere",
+    "carrway_asset_owner": "Local Authority",
+    "length": 0.239
+  },
+  {
+    "major_surface_type": "Ac Conc Ib",
+    "onrc": "Primary Collector",
+    "cway_hierarchy": "REGION ARTERIAL",
+    "urban_rural": "Urban",
+    "road_type_desc": "Local Authority",
+    "cway_area": "Kaweka",
+    "carrway_asset_owner": "Local Authority",
+    "length": 0.027
+  },
+  {
+    "major_surface_type": "Ac Conc Ib",
+    "onrc": "Secondary Collector",
+    "cway_hierarchy": "ARTERIAL",
+    "urban_rural": "Rural",
+    "road_type_desc": "Local Authority",
+    "cway_area": "Kaweka",
+    "carrway_asset_owner": "Local Authority",
+    "length": 0.017
+  },
+  {
+    "major_surface_type": "Ac Conc Ib",
+    "onrc": "Secondary Collector",
+    "cway_hierarchy": "ARTERIAL",
+    "urban_rural": "Rural",
+    "road_type_desc": "Local Authority",
+    "cway_area": "Poukawa",
+    "carrway_asset_owner": "Local Authority",
+    "length": 0.377
+  },
+  {
+    "major_surface_type": "Ac Conc Ib",
+    "onrc": "Secondary Collector",
+    "cway_hierarchy": "ARTERIAL",
+    "urban_rural": "Urban",
+    "road_type_desc": "Local Authority",
+    "cway_area": "Hastings & Flaxmere",
+    "carrway_asset_owner": "Local Authority",
+    "length": 0.051
+  },
+  {
+    "major_surface_type": "Ac Conc Ib",
+    "onrc": "Secondary Collector",
+    "cway_hierarchy": "ARTERIAL",
+    "urban_rural": "Urban",
+    "road_type_desc": "Local Authority",
+    "cway_area": "Maraekakaho",
+    "carrway_asset_owner": "Local Authority",
+    "length": 0.056
+  },
+  {
+    "major_surface_type": "Ac Conc Ib",
+    "onrc": "Secondary Collector",
+    "cway_hierarchy": "COLLECTOR",
+    "urban_rural": "Rural",
+    "road_type_desc": "Local Authority",
+    "cway_area": "Heretaunga",
+    "carrway_asset_owner": "Local Authority",
+    "length": 0.014
+  },
+  {
+    "major_surface_type": "Ac Conc Ib",
+    "onrc": "Secondary Collector",
+    "cway_hierarchy": "COLLECTOR",
+    "urban_rural": "Rural",
+    "road_type_desc": "Local Authority",
+    "cway_area": "Kaweka",
+    "carrway_asset_owner": "Local Authority",
+    "length": 0.364
+  },
+  {
+    "major_surface_type": "Ac Conc Ib",
+    "onrc": "Secondary Collector",
+    "cway_hierarchy": "COLLECTOR",
+    "urban_rural": "Rural",
+    "road_type_desc": "Local Authority",
+    "cway_area": "Poukawa",
+    "carrway_asset_owner": "Local Authority",
+    "length": 0.053
+  },
+  {
+    "major_surface_type": "Ac Conc Ib",
+    "onrc": "Secondary Collector",
+    "cway_hierarchy": "COLLECTOR",
+    "urban_rural": "Urban",
+    "road_type_desc": "Local Authority",
+    "cway_area": "Clive",
+    "carrway_asset_owner": "Local Authority",
+    "length": 0.129
+  },
+  {
+    "major_surface_type": "Ac Conc Ib",
+    "onrc": "Secondary Collector",
+    "cway_hierarchy": "COLLECTOR",
+    "urban_rural": "Urban",
+    "road_type_desc": "Local Authority",
+    "cway_area": "Hastings & Flaxmere",
+    "carrway_asset_owner": "Local Authority",
+    "length": 0.354
+  },
+  {
+    "major_surface_type": "Ac Conc Ib",
+    "onrc": "Secondary Collector",
+    "cway_hierarchy": "COLLECTOR",
+    "urban_rural": "Urban",
+    "road_type_desc": "Local Authority",
+    "cway_area": "Havelock North",
+    "carrway_asset_owner": "Local Authority",
+    "length": 1.632
+  },
+  {
+    "major_surface_type": "Ac Conc Ib",
+    "onrc": "Secondary Collector",
+    "cway_hierarchy": "COLLECTOR",
+    "urban_rural": "Urban",
+    "road_type_desc": "Local Authority",
+    "cway_area": "Heretaunga",
+    "carrway_asset_owner": "Local Authority",
+    "length": 0.015
+  },
+  {
+    "major_surface_type": "Ac Conc Ib",
+    "onrc": "Secondary Collector",
+    "cway_hierarchy": "COLLECTOR",
+    "urban_rural": "Urban",
+    "road_type_desc": "Local Authority",
+    "carrway_asset_owner": "Local Authority",
+    "length": 0.122
+  },
+  {
+    "major_surface_type": "Ac Conc Ib",
+    "onrc": "Secondary Collector",
+    "cway_hierarchy": "LOCAL",
+    "urban_rural": "Rural",
+    "road_type_desc": "Local Authority",
+    "cway_area": "Clive",
+    "carrway_asset_owner": "Local Authority",
+    "length": 0.092
+  },
+  {
+    "major_surface_type": "Ac Conc Ib",
+    "onrc": "Secondary Collector",
+    "cway_hierarchy": "LOCAL",
+    "urban_rural": "Rural",
+    "road_type_desc": "Local Authority",
+    "cway_area": "Heretaunga",
+    "carrway_asset_owner": "Local Authority",
+    "length": 0.023
+  },
+  {
+    "major_surface_type": "Ac Conc Ib",
+    "onrc": "Secondary Collector",
+    "cway_hierarchy": "LOCAL",
+    "urban_rural": "Rural",
+    "road_type_desc": "Local Authority",
+    "cway_area": "Kaweka",
+    "carrway_asset_owner": "Local Authority",
+    "length": 0.154
+  },
+  {
+    "major_surface_type": "Ac Conc Ib",
+    "onrc": "Secondary Collector",
+    "cway_hierarchy": "LOCAL",
+    "urban_rural": "Rural",
+    "road_type_desc": "Local Authority",
+    "cway_area": "Poukawa",
+    "carrway_asset_owner": "Local Authority",
+    "length": 0.07
+  },
+  {
+    "major_surface_type": "Ac Conc Ib",
+    "onrc": "Secondary Collector",
+    "cway_hierarchy": "LOCAL",
+    "urban_rural": "Urban",
+    "road_type_desc": "Local Authority",
+    "cway_area": "Clive",
+    "carrway_asset_owner": "Local Authority",
+    "length": 0.027
+  },
+  {
+    "major_surface_type": "Ac Conc Ib",
+    "onrc": "Secondary Collector",
+    "cway_hierarchy": "LOCAL",
+    "urban_rural": "Urban",
+    "road_type_desc": "Local Authority",
+    "cway_area": "Hastings & Flaxmere",
+    "carrway_asset_owner": "Local Authority",
+    "length": 3.465
+  },
+  {
+    "major_surface_type": "Ac Conc Ib",
+    "onrc": "Secondary Collector",
+    "cway_hierarchy": "LOCAL",
+    "urban_rural": "Urban",
+    "road_type_desc": "Local Authority",
+    "cway_area": "Havelock North",
+    "carrway_asset_owner": "Local Authority",
+    "length": 0.968
+  },
+  {
+    "major_surface_type": "Ac Conc Ib",
+    "onrc": "Secondary Collector",
+    "cway_hierarchy": "LOCAL",
+    "urban_rural": "Urban",
+    "road_type_desc": "Local Authority",
+    "cway_area": "Heretaunga",
+    "carrway_asset_owner": "Local Authority",
+    "length": 0.555
+  },
+  {
+    "major_surface_type": "Ac Conc Ib",
+    "onrc": "Secondary Collector",
+    "cway_hierarchy": "LOCAL",
+    "urban_rural": "Urban",
+    "road_type_desc": "Local Authority",
+    "carrway_asset_owner": "Local Authority",
+    "length": 0.163
+  },
+  {
+    "major_surface_type": "Ac Conc Ib",
+    "onrc": "Secondary Collector",
+    "cway_hierarchy": "LOCAL CBD",
+    "urban_rural": "Urban",
+    "road_type_desc": "Local Authority",
+    "cway_area": "Hastings & Flaxmere",
+    "carrway_asset_owner": "Local Authority",
+    "length": 1.55
+  },
+  {
+    "major_surface_type": "Ac Conc Ib",
+    "onrc": "Unknown",
+    "cway_hierarchy": "COLLECTOR",
+    "urban_rural": "Rural",
+    "road_type_desc": "Local Authority",
+    "cway_area": "Heretaunga",
+    "carrway_asset_owner": "Local Authority",
+    "length": 0.028
+  },
+  {
+    "major_surface_type": "Ac Conc Ib",
+    "onrc": "Unknown",
+    "cway_hierarchy": "LOCAL",
+    "urban_rural": "Urban",
+    "road_type_desc": "Car Park",
+    "carrway_asset_owner": "Local Authority",
+    "length": 0.085
+  },
+  {
+    "major_surface_type": "Ac Conc Ib",
+    "onrc": "Unknown",
+    "cway_hierarchy": "LOCAL",
+    "urban_rural": "Urban",
+    "road_type_desc": "Local Authority",
+    "cway_area": "Hastings & Flaxmere",
+    "carrway_asset_owner": "Local Authority",
+    "length": 0.25
+  },
+  {
+    "major_surface_type": "Ac Conc Ib",
+    "onrc": "Unknown",
+    "cway_hierarchy": "LOCAL",
+    "urban_rural": "Urban",
+    "road_type_desc": "Local Authority",
+    "cway_area": "Havelock North",
+    "carrway_asset_owner": "Local Authority",
+    "length": 0.021
+  },
+  {
+    "major_surface_type": "Ac Conc Ib",
+    "onrc": "Unknown",
+    "cway_hierarchy": "LOCAL",
+    "urban_rural": "Urban",
+    "road_type_desc": "Private Development",
+    "cway_area": "Havelock North",
+    "carrway_asset_owner": "Private",
+    "length": 0.174
+  },
+  {
+    "major_surface_type": "Ac Conc Ib",
+    "onrc": "Unknown",
+    "cway_hierarchy": "LOCAL CBD",
+    "urban_rural": "Urban",
+    "road_type_desc": "Car Park",
+    "cway_area": "Hastings & Flaxmere",
+    "carrway_asset_owner": "Local Authority",
+    "length": 0.051
+  },
+  {
+    "major_surface_type": "Ac Conc Ib",
+    "onrc": "Unknown",
+    "cway_hierarchy": "LOCAL CBD",
+    "urban_rural": "Urban",
+    "road_type_desc": "Car Park",
+    "cway_area": "Havelock North",
+    "carrway_asset_owner": "Local Authority",
+    "length": 0.05
+  },
+  {
+    "major_surface_type": "Ac Conc Ib",
+    "onrc": "Unknown",
+    "cway_hierarchy": "LOCAL CBD",
+    "urban_rural": "Urban",
+    "road_type_desc": "Service Lane",
+    "cway_area": "Havelock North",
+    "carrway_asset_owner": "Local Authority",
+    "length": 0.317
+  },
+  {
+    "major_surface_type": "Chipseal",
+    "onrc": "Access",
+    "cway_hierarchy": "ARTERIAL",
+    "urban_rural": "Rural",
+    "road_type_desc": "Local Authority",
+    "cway_area": "Tutira",
+    "carrway_asset_owner": "Local Authority",
+    "length": 15.11
+  },
+  {
+    "major_surface_type": "Chipseal",
+    "onrc": "Access",
+    "cway_hierarchy": "COLLECTOR",
+    "urban_rural": "Rural",
+    "road_type_desc": "Local Authority",
+    "cway_area": "Maraekakaho",
+    "carrway_asset_owner": "Local Authority",
+    "length": 13.506
+  },
+  {
+    "major_surface_type": "Chipseal",
+    "onrc": "Access",
+    "cway_hierarchy": "COLLECTOR",
+    "urban_rural": "Rural",
+    "road_type_desc": "Local Authority",
+    "cway_area": "Poukawa",
+    "carrway_asset_owner": "Local Authority",
+    "length": 5.352
+  },
+  {
+    "major_surface_type": "Chipseal",
+    "onrc": "Access",
+    "cway_hierarchy": "COLLECTOR",
+    "urban_rural": "Rural",
+    "road_type_desc": "Local Authority",
+    "cway_area": "Tutira",
+    "carrway_asset_owner": "Local Authority",
+    "length": 15.199
+  },
+  {
+    "major_surface_type": "Chipseal",
+    "onrc": "Access",
+    "cway_hierarchy": "COLLECTOR",
+    "urban_rural": "Urban",
+    "road_type_desc": "Local Authority",
+    "cway_area": "Havelock North",
+    "carrway_asset_owner": "Local Authority",
+    "length": 1.232
+  },
+  {
+    "major_surface_type": "Chipseal",
+    "onrc": "Access",
+    "cway_hierarchy": "COLLECTOR",
+    "urban_rural": "Urban",
+    "road_type_desc": "Local Authority",
+    "cway_area": "Maraekakaho",
+    "carrway_asset_owner": "Local Authority",
+    "length": 0.829
+  },
+  {
+    "major_surface_type": "Chipseal",
+    "onrc": "Access",
+    "cway_hierarchy": "LOCAL",
+    "urban_rural": "Rural",
+    "road_type_desc": "Local Authority",
+    "cway_area": "Clive",
+    "carrway_asset_owner": "Local Authority",
+    "length": 9.413
+  },
+  {
+    "major_surface_type": "Chipseal",
+    "onrc": "Access",
+    "cway_hierarchy": "LOCAL",
+    "urban_rural": "Rural",
+    "road_type_desc": "Local Authority",
+    "cway_area": "Hastings & Flaxmere",
+    "carrway_asset_owner": "Local Authority",
+    "length": 1.249
+  },
+  {
+    "major_surface_type": "Chipseal",
+    "onrc": "Access",
+    "cway_hierarchy": "LOCAL",
+    "urban_rural": "Rural",
+    "road_type_desc": "Local Authority",
+    "cway_area": "Heretaunga",
+    "carrway_asset_owner": "Local Authority",
+    "length": 3.947
+  },
+  {
+    "major_surface_type": "Chipseal",
+    "onrc": "Access",
+    "cway_hierarchy": "LOCAL",
+    "urban_rural": "Rural",
+    "road_type_desc": "Local Authority",
+    "cway_area": "Kaweka",
+    "carrway_asset_owner": "Local Authority",
+    "length": 91.189
+  },
+  {
+    "major_surface_type": "Chipseal",
+    "onrc": "Access",
+    "cway_hierarchy": "LOCAL",
+    "urban_rural": "Rural",
+    "road_type_desc": "Local Authority",
+    "cway_area": "Maraekakaho",
+    "carrway_asset_owner": "Local Authority",
+    "length": 56.791
+  },
+  {
+    "major_surface_type": "Chipseal",
+    "onrc": "Access",
+    "cway_hierarchy": "LOCAL",
+    "urban_rural": "Rural",
+    "road_type_desc": "Local Authority",
+    "cway_area": "Poukawa",
+    "carrway_asset_owner": "Local Authority",
+    "length": 52.256
+  },
+  {
+    "major_surface_type": "Chipseal",
+    "onrc": "Access",
+    "cway_hierarchy": "LOCAL",
+    "urban_rural": "Rural",
+    "road_type_desc": "Local Authority",
+    "cway_area": "Tutira",
+    "carrway_asset_owner": "Local Authority",
+    "length": 36.077
+  },
+  {
+    "major_surface_type": "Chipseal",
+    "onrc": "Access",
+    "cway_hierarchy": "LOCAL",
+    "urban_rural": "Urban",
+    "road_type_desc": "Local Authority",
+    "cway_area": "Clive",
+    "carrway_asset_owner": "Local Authority",
+    "length": 3.909
+  },
+  {
+    "major_surface_type": "Chipseal",
+    "onrc": "Access",
+    "cway_hierarchy": "LOCAL",
+    "urban_rural": "Urban",
+    "road_type_desc": "Local Authority",
+    "cway_area": "Hastings & Flaxmere",
+    "carrway_asset_owner": "Local Authority",
+    "length": 31.209
+  },
+  {
+    "major_surface_type": "Chipseal",
+    "onrc": "Access",
+    "cway_hierarchy": "LOCAL",
+    "urban_rural": "Urban",
+    "road_type_desc": "Local Authority",
+    "cway_area": "Havelock North",
+    "carrway_asset_owner": "Local Authority",
+    "length": 20.924
+  },
+  {
+    "major_surface_type": "Chipseal",
+    "onrc": "Access",
+    "cway_hierarchy": "LOCAL",
+    "urban_rural": "Urban",
+    "road_type_desc": "Local Authority",
+    "cway_area": "Heretaunga",
+    "carrway_asset_owner": "Local Authority",
+    "length": 1.606
+  },
+  {
+    "major_surface_type": "Chipseal",
+    "onrc": "Access",
+    "cway_hierarchy": "LOCAL",
+    "urban_rural": "Urban",
+    "road_type_desc": "Local Authority",
+    "cway_area": "Poukawa",
+    "carrway_asset_owner": "Local Authority",
+    "length": 1.04
+  },
+  {
+    "major_surface_type": "Chipseal",
+    "onrc": "Access",
+    "cway_hierarchy": "LOCAL",
+    "urban_rural": "Urban",
+    "road_type_desc": "Local Authority",
+    "carrway_asset_owner": "Local Authority",
+    "length": 12.12
+  },
+  {
+    "major_surface_type": "Chipseal",
+    "onrc": "Access",
+    "cway_hierarchy": "LOCAL CBD",
+    "urban_rural": "Urban",
+    "road_type_desc": "Local Authority",
+    "cway_area": "Hastings & Flaxmere",
+    "carrway_asset_owner": "Local Authority",
+    "length": 0.141
+  },
+  {
+    "major_surface_type": "Chipseal",
+    "onrc": "Arterial",
+    "cway_hierarchy": "ARTERIAL",
+    "urban_rural": "Rural",
+    "road_type_desc": "Local Authority",
+    "cway_area": "Clive",
+    "carrway_asset_owner": "Local Authority",
+    "length": 5.938
+  },
+  {
+    "major_surface_type": "Chipseal",
+    "onrc": "Arterial",
+    "cway_hierarchy": "ARTERIAL",
+    "urban_rural": "Rural",
+    "road_type_desc": "Local Authority",
+    "cway_area": "Hastings & Flaxmere",
+    "carrway_asset_owner": "Local Authority",
+    "length": 0.271
+  },
+  {
+    "major_surface_type": "Chipseal",
+    "onrc": "Arterial",
+    "cway_hierarchy": "ARTERIAL",
+    "urban_rural": "Rural",
+    "road_type_desc": "Local Authority",
+    "cway_area": "Heretaunga",
+    "carrway_asset_owner": "Local Authority",
+    "length": 4.769
+  },
+  {
+    "major_surface_type": "Chipseal",
+    "onrc": "Arterial",
+    "cway_hierarchy": "ARTERIAL",
+    "urban_rural": "Rural",
+    "road_type_desc": "Local Authority",
+    "cway_area": "Maraekakaho",
+    "carrway_asset_owner": "Local Authority",
+    "length": 1.241
+  },
+  {
+    "major_surface_type": "Chipseal",
+    "onrc": "Arterial",
+    "cway_hierarchy": "ARTERIAL",
+    "urban_rural": "Urban",
+    "road_type_desc": "Local Authority",
+    "cway_area": "Clive",
+    "carrway_asset_owner": "Local Authority",
+    "length": 0.665
+  },
+  {
+    "major_surface_type": "Chipseal",
+    "onrc": "Arterial",
+    "cway_hierarchy": "ARTERIAL",
+    "urban_rural": "Urban",
+    "road_type_desc": "Local Authority",
+    "cway_area": "Hastings & Flaxmere",
+    "carrway_asset_owner": "Local Authority",
+    "length": 4.927
+  },
+  {
+    "major_surface_type": "Chipseal",
+    "onrc": "Arterial",
+    "cway_hierarchy": "ARTERIAL",
+    "urban_rural": "Urban",
+    "road_type_desc": "Local Authority",
+    "cway_area": "Havelock North",
+    "carrway_asset_owner": "Local Authority",
+    "length": 0.012
+  },
+  {
+    "major_surface_type": "Chipseal",
+    "onrc": "Arterial",
+    "cway_hierarchy": "ARTERIAL",
+    "urban_rural": "Urban",
+    "road_type_desc": "Local Authority",
+    "cway_area": "Heretaunga",
+    "carrway_asset_owner": "Local Authority",
+    "length": 1.777
+  },
+  {
+    "major_surface_type": "Chipseal",
+    "onrc": "Arterial",
+    "cway_hierarchy": "COLLECTOR",
+    "urban_rural": "Rural",
+    "road_type_desc": "Local Authority",
+    "cway_area": "Clive",
+    "carrway_asset_owner": "Local Authority",
+    "length": 0.581
+  },
+  {
+    "major_surface_type": "Chipseal",
+    "onrc": "Arterial",
+    "cway_hierarchy": "COLLECTOR",
+    "urban_rural": "Rural",
+    "road_type_desc": "Local Authority",
+    "cway_area": "Heretaunga",
+    "carrway_asset_owner": "Local Authority",
+    "length": 0.519
+  },
+  {
+    "major_surface_type": "Chipseal",
+    "onrc": "Arterial",
+    "cway_hierarchy": "COLLECTOR",
+    "urban_rural": "Urban",
+    "road_type_desc": "Local Authority",
+    "cway_area": "Hastings & Flaxmere",
+    "carrway_asset_owner": "Local Authority",
+    "length": 0.103
+  },
+  {
+    "major_surface_type": "Chipseal",
+    "onrc": "Arterial",
+    "cway_hierarchy": "LOCAL",
+    "urban_rural": "Rural",
+    "road_type_desc": "Local Authority",
+    "cway_area": "Clive",
+    "carrway_asset_owner": "Local Authority",
+    "length": 0.142
+  },
+  {
+    "major_surface_type": "Chipseal",
+    "onrc": "Arterial",
+    "cway_hierarchy": "REGION ARTERIAL",
+    "urban_rural": "Rural",
+    "road_type_desc": "Local Authority",
+    "cway_area": "Hastings & Flaxmere",
+    "carrway_asset_owner": "Local Authority",
+    "length": 1.284
+  },
+  {
+    "major_surface_type": "Chipseal",
+    "onrc": "Arterial",
+    "cway_hierarchy": "REGION ARTERIAL",
+    "urban_rural": "Urban",
+    "road_type_desc": "Local Authority",
+    "cway_area": "Hastings & Flaxmere",
+    "carrway_asset_owner": "Local Authority",
+    "length": 3.226
+  },
+  {
+    "major_surface_type": "Chipseal",
+    "onrc": "Arterial",
+    "cway_hierarchy": "REGION ARTERIAL",
+    "urban_rural": "Urban",
+    "road_type_desc": "Local Authority",
+    "cway_area": "Heretaunga",
+    "carrway_asset_owner": "Local Authority",
+    "length": 0.06
+  },
+  {
+    "major_surface_type": "Chipseal",
+    "onrc": "Low Volume",
+    "cway_hierarchy": "COLLECTOR",
+    "urban_rural": "Urban",
+    "road_type_desc": "Local Authority",
+    "carrway_asset_owner": "Local Authority",
+    "length": 0.315
+  },
+  {
+    "major_surface_type": "Chipseal",
+    "onrc": "Low Volume",
+    "cway_hierarchy": "LOCAL",
+    "urban_rural": "Rural",
+    "road_type_desc": "Local Authority",
+    "cway_area": "Clive",
+    "carrway_asset_owner": "Local Authority",
+    "length": 0.953
+  },
+  {
+    "major_surface_type": "Chipseal",
+    "onrc": "Low Volume",
+    "cway_hierarchy": "LOCAL",
+    "urban_rural": "Rural",
+    "road_type_desc": "Local Authority",
+    "cway_area": "Havelock North",
+    "carrway_asset_owner": "Local Authority",
+    "length": 0.409
+  },
+  {
+    "major_surface_type": "Chipseal",
+    "onrc": "Low Volume",
+    "cway_hierarchy": "LOCAL",
+    "urban_rural": "Rural",
+    "road_type_desc": "Local Authority",
+    "cway_area": "Heretaunga",
+    "carrway_asset_owner": "Local Authority",
+    "length": 6.019
+  },
+  {
+    "major_surface_type": "Chipseal",
+    "onrc": "Low Volume",
+    "cway_hierarchy": "LOCAL",
+    "urban_rural": "Rural",
+    "road_type_desc": "Local Authority",
+    "cway_area": "Kaweka",
+    "carrway_asset_owner": "Local Authority",
+    "length": 46.277
+  },
+  {
+    "major_surface_type": "Chipseal",
+    "onrc": "Low Volume",
+    "cway_hierarchy": "LOCAL",
+    "urban_rural": "Rural",
+    "road_type_desc": "Local Authority",
+    "cway_area": "Maraekakaho",
+    "carrway_asset_owner": "Local Authority",
+    "length": 50.156
+  },
+  {
+    "major_surface_type": "Chipseal",
+    "onrc": "Low Volume",
+    "cway_hierarchy": "LOCAL",
+    "urban_rural": "Rural",
+    "road_type_desc": "Local Authority",
+    "cway_area": "Poukawa",
+    "carrway_asset_owner": "Local Authority",
+    "length": 19.662
+  },
+  {
+    "major_surface_type": "Chipseal",
+    "onrc": "Low Volume",
+    "cway_hierarchy": "LOCAL",
+    "urban_rural": "Rural",
+    "road_type_desc": "Local Authority",
+    "cway_area": "Tutira",
+    "carrway_asset_owner": "Local Authority",
+    "length": 18.517
+  },
+  {
+    "major_surface_type": "Chipseal",
+    "onrc": "Low Volume",
+    "cway_hierarchy": "LOCAL",
+    "urban_rural": "Urban",
+    "road_type_desc": "Local Authority",
+    "cway_area": "Clive",
+    "carrway_asset_owner": "Local Authority",
+    "length": 9.063
+  },
+  {
+    "major_surface_type": "Chipseal",
+    "onrc": "Low Volume",
+    "cway_hierarchy": "LOCAL",
+    "urban_rural": "Urban",
+    "road_type_desc": "Local Authority",
+    "cway_area": "Hastings & Flaxmere",
+    "carrway_asset_owner": "Local Authority",
+    "length": 11.263
+  },
+  {
+    "major_surface_type": "Chipseal",
+    "onrc": "Low Volume",
+    "cway_hierarchy": "LOCAL",
+    "urban_rural": "Urban",
+    "road_type_desc": "Local Authority",
+    "cway_area": "Havelock North",
+    "carrway_asset_owner": "Local Authority",
+    "length": 6.313
+  },
+  {
+    "major_surface_type": "Chipseal",
+    "onrc": "Low Volume",
+    "cway_hierarchy": "LOCAL",
+    "urban_rural": "Urban",
+    "road_type_desc": "Local Authority",
+    "cway_area": "Heretaunga",
+    "carrway_asset_owner": "Local Authority",
+    "length": 1.164
+  },
+  {
+    "major_surface_type": "Chipseal",
+    "onrc": "Low Volume",
+    "cway_hierarchy": "LOCAL",
+    "urban_rural": "Urban",
+    "road_type_desc": "Local Authority",
+    "cway_area": "Maraekakaho",
+    "carrway_asset_owner": "Local Authority",
+    "length": 0.596
+  },
+  {
+    "major_surface_type": "Chipseal",
+    "onrc": "Low Volume",
+    "cway_hierarchy": "LOCAL",
+    "urban_rural": "Urban",
+    "road_type_desc": "Local Authority",
+    "cway_area": "Poukawa",
+    "carrway_asset_owner": "Local Authority",
+    "length": 1.065
+  },
+  {
+    "major_surface_type": "Chipseal",
+    "onrc": "Low Volume",
+    "cway_hierarchy": "LOCAL",
+    "urban_rural": "Urban",
+    "road_type_desc": "Local Authority",
+    "cway_area": "Tutira",
+    "carrway_asset_owner": "Local Authority",
+    "length": 0.187
+  },
+  {
+    "major_surface_type": "Chipseal",
+    "onrc": "Low Volume",
+    "cway_hierarchy": "LOCAL",
+    "urban_rural": "Urban",
+    "road_type_desc": "Local Authority",
+    "carrway_asset_owner": "Local Authority",
+    "length": 7.258
+  },
+  {
+    "major_surface_type": "Chipseal",
+    "onrc": "Primary Collector",
+    "cway_hierarchy": "ARTERIAL",
+    "urban_rural": "Rural",
+    "road_type_desc": "Local Authority",
+    "cway_area": "Clive",
+    "carrway_asset_owner": "Local Authority",
+    "length": 4.274
+  },
+  {
+    "major_surface_type": "Chipseal",
+    "onrc": "Primary Collector",
+    "cway_hierarchy": "ARTERIAL",
+    "urban_rural": "Rural",
+    "road_type_desc": "Local Authority",
+    "cway_area": "Hastings & Flaxmere",
+    "carrway_asset_owner": "Local Authority",
+    "length": 0.001
+  },
+  {
+    "major_surface_type": "Chipseal",
+    "onrc": "Primary Collector",
+    "cway_hierarchy": "ARTERIAL",
+    "urban_rural": "Rural",
+    "road_type_desc": "Local Authority",
+    "cway_area": "Havelock North",
+    "carrway_asset_owner": "Local Authority",
+    "length": 1.458
+  },
+  {
+    "major_surface_type": "Chipseal",
+    "onrc": "Primary Collector",
+    "cway_hierarchy": "ARTERIAL",
+    "urban_rural": "Rural",
+    "road_type_desc": "Local Authority",
+    "cway_area": "Heretaunga",
+    "carrway_asset_owner": "Local Authority",
+    "length": 2.315
+  },
+  {
+    "major_surface_type": "Chipseal",
+    "onrc": "Primary Collector",
+    "cway_hierarchy": "ARTERIAL",
+    "urban_rural": "Rural",
+    "road_type_desc": "Local Authority",
+    "cway_area": "Kaweka",
+    "carrway_asset_owner": "Local Authority",
+    "length": 9.34
+  },
+  {
+    "major_surface_type": "Chipseal",
+    "onrc": "Primary Collector",
+    "cway_hierarchy": "ARTERIAL",
+    "urban_rural": "Rural",
+    "road_type_desc": "Local Authority",
+    "cway_area": "Maraekakaho",
+    "carrway_asset_owner": "Local Authority",
+    "length": 7.55
+  },
+  {
+    "major_surface_type": "Chipseal",
+    "onrc": "Primary Collector",
+    "cway_hierarchy": "ARTERIAL",
+    "urban_rural": "Rural",
+    "road_type_desc": "Local Authority",
+    "cway_area": "Poukawa",
+    "carrway_asset_owner": "Local Authority",
+    "length": 13.803
+  },
+  {
+    "major_surface_type": "Chipseal",
+    "onrc": "Primary Collector",
+    "cway_hierarchy": "ARTERIAL",
+    "urban_rural": "Urban",
+    "road_type_desc": "Local Authority",
+    "cway_area": "Clive",
+    "carrway_asset_owner": "Local Authority",
+    "length": 0.866
+  },
+  {
+    "major_surface_type": "Chipseal",
+    "onrc": "Primary Collector",
+    "cway_hierarchy": "ARTERIAL",
+    "urban_rural": "Urban",
+    "road_type_desc": "Local Authority",
+    "cway_area": "Hastings & Flaxmere",
+    "carrway_asset_owner": "Local Authority",
+    "length": 3.654
+  },
+  {
+    "major_surface_type": "Chipseal",
+    "onrc": "Primary Collector",
+    "cway_hierarchy": "ARTERIAL",
+    "urban_rural": "Urban",
+    "road_type_desc": "Local Authority",
+    "cway_area": "Havelock North",
+    "carrway_asset_owner": "Local Authority",
+    "length": 3.073
+  },
+  {
+    "major_surface_type": "Chipseal",
+    "onrc": "Primary Collector",
+    "cway_hierarchy": "ARTERIAL",
+    "urban_rural": "Urban",
+    "road_type_desc": "Local Authority",
+    "cway_area": "Heretaunga",
+    "carrway_asset_owner": "Local Authority",
+    "length": 0.13
+  },
+  {
+    "major_surface_type": "Chipseal",
+    "onrc": "Primary Collector",
+    "cway_hierarchy": "ARTERIAL",
+    "urban_rural": "Urban",
+    "road_type_desc": "Local Authority",
+    "cway_area": "Kaweka",
+    "carrway_asset_owner": "Local Authority",
+    "length": 0.878
+  },
+  {
+    "major_surface_type": "Chipseal",
+    "onrc": "Primary Collector",
+    "cway_hierarchy": "ARTERIAL",
+    "urban_rural": "Urban",
+    "road_type_desc": "Local Authority",
+    "cway_area": "Maraekakaho",
+    "carrway_asset_owner": "Local Authority",
+    "length": 0.943
+  },
+  {
+    "major_surface_type": "Chipseal",
+    "onrc": "Primary Collector",
+    "cway_hierarchy": "ARTERIAL",
+    "urban_rural": "Urban",
+    "road_type_desc": "Local Authority",
+    "cway_area": "Poukawa",
+    "carrway_asset_owner": "Local Authority",
+    "length": 0.672
+  },
+  {
+    "major_surface_type": "Chipseal",
+    "onrc": "Primary Collector",
+    "cway_hierarchy": "ARTERIAL",
+    "urban_rural": "Urban",
+    "road_type_desc": "Local Authority",
+    "carrway_asset_owner": "Local Authority",
+    "length": 1.155
+  },
+  {
+    "major_surface_type": "Chipseal",
+    "onrc": "Primary Collector",
+    "cway_hierarchy": "COLLECTOR",
+    "urban_rural": "Rural",
+    "road_type_desc": "Local Authority",
+    "cway_area": "Clive",
+    "carrway_asset_owner": "Local Authority",
+    "length": 10.286
+  },
+  {
+    "major_surface_type": "Chipseal",
+    "onrc": "Primary Collector",
+    "cway_hierarchy": "COLLECTOR",
+    "urban_rural": "Rural",
+    "road_type_desc": "Local Authority",
+    "cway_area": "Hastings & Flaxmere",
+    "carrway_asset_owner": "Local Authority",
+    "length": 0.361
+  },
+  {
+    "major_surface_type": "Chipseal",
+    "onrc": "Primary Collector",
+    "cway_hierarchy": "COLLECTOR",
+    "urban_rural": "Rural",
+    "road_type_desc": "Local Authority",
+    "cway_area": "Heretaunga",
+    "carrway_asset_owner": "Local Authority",
+    "length": 17.258
+  },
+  {
+    "major_surface_type": "Chipseal",
+    "onrc": "Primary Collector",
+    "cway_hierarchy": "COLLECTOR",
+    "urban_rural": "Rural",
+    "road_type_desc": "Local Authority",
+    "cway_area": "Maraekakaho",
+    "carrway_asset_owner": "Local Authority",
+    "length": 5.719
+  },
+  {
+    "major_surface_type": "Chipseal",
+    "onrc": "Primary Collector",
+    "cway_hierarchy": "COLLECTOR",
+    "urban_rural": "Rural",
+    "road_type_desc": "Local Authority",
+    "cway_area": "Poukawa",
+    "carrway_asset_owner": "Local Authority",
+    "length": 3.814
+  },
+  {
+    "major_surface_type": "Chipseal",
+    "onrc": "Primary Collector",
+    "cway_hierarchy": "COLLECTOR",
+    "urban_rural": "Urban",
+    "road_type_desc": "Local Authority",
+    "cway_area": "Clive",
+    "carrway_asset_owner": "Local Authority",
+    "length": 0.713
+  },
+  {
+    "major_surface_type": "Chipseal",
+    "onrc": "Primary Collector",
+    "cway_hierarchy": "COLLECTOR",
+    "urban_rural": "Urban",
+    "road_type_desc": "Local Authority",
+    "cway_area": "Hastings & Flaxmere",
+    "carrway_asset_owner": "Local Authority",
+    "length": 11.207
+  },
+  {
+    "major_surface_type": "Chipseal",
+    "onrc": "Primary Collector",
+    "cway_hierarchy": "COLLECTOR",
+    "urban_rural": "Urban",
+    "road_type_desc": "Local Authority",
+    "cway_area": "Havelock North",
+    "carrway_asset_owner": "Local Authority",
+    "length": 0.662
+  },
+  {
+    "major_surface_type": "Chipseal",
+    "onrc": "Primary Collector",
+    "cway_hierarchy": "COLLECTOR",
+    "urban_rural": "Urban",
+    "road_type_desc": "Local Authority",
+    "cway_area": "Heretaunga",
+    "carrway_asset_owner": "Local Authority",
+    "length": 0.06
+  },
+  {
+    "major_surface_type": "Chipseal",
+    "onrc": "Primary Collector",
+    "cway_hierarchy": "COLLECTOR",
+    "urban_rural": "Urban",
+    "road_type_desc": "Local Authority",
+    "carrway_asset_owner": "Local Authority",
+    "length": 2.426
+  },
+  {
+    "major_surface_type": "Chipseal",
+    "onrc": "Primary Collector",
+    "cway_hierarchy": "LOCAL",
+    "urban_rural": "Rural",
+    "road_type_desc": "Local Authority",
+    "cway_area": "Clive",
+    "carrway_asset_owner": "Local Authority",
+    "length": 1.505
+  },
+  {
+    "major_surface_type": "Chipseal",
+    "onrc": "Primary Collector",
+    "cway_hierarchy": "LOCAL",
+    "urban_rural": "Rural",
+    "road_type_desc": "Local Authority",
+    "cway_area": "Heretaunga",
+    "carrway_asset_owner": "Local Authority",
+    "length": 4.672
+  },
+  {
+    "major_surface_type": "Chipseal",
+    "onrc": "Primary Collector",
+    "cway_hierarchy": "LOCAL",
+    "urban_rural": "Rural",
+    "road_type_desc": "Local Authority",
+    "cway_area": "Kaweka",
+    "carrway_asset_owner": "Local Authority",
+    "length": 0.83
+  },
+  {
+    "major_surface_type": "Chipseal",
+    "onrc": "Primary Collector",
+    "cway_hierarchy": "LOCAL",
+    "urban_rural": "Urban",
+    "road_type_desc": "Local Authority",
+    "cway_area": "Hastings & Flaxmere",
+    "carrway_asset_owner": "Local Authority",
+    "length": 0.764
+  },
+  {
+    "major_surface_type": "Chipseal",
+    "onrc": "Primary Collector",
+    "cway_hierarchy": "LOCAL",
+    "urban_rural": "Urban",
+    "road_type_desc": "Local Authority",
+    "cway_area": "Havelock North",
+    "carrway_asset_owner": "Local Authority",
+    "length": 0.149
+  },
+  {
+    "major_surface_type": "Chipseal",
+    "onrc": "Primary Collector",
+    "cway_hierarchy": "LOCAL",
+    "urban_rural": "Urban",
+    "road_type_desc": "Local Authority",
+    "cway_area": "Heretaunga",
+    "carrway_asset_owner": "Local Authority",
+    "length": 1.569
+  },
+  {
+    "major_surface_type": "Chipseal",
+    "onrc": "Primary Collector",
+    "cway_hierarchy": "LOCAL",
+    "urban_rural": "Urban",
+    "road_type_desc": "Local Authority",
+    "carrway_asset_owner": "Local Authority",
+    "length": 0.382
+  },
+  {
+    "major_surface_type": "Chipseal",
+    "onrc": "Primary Collector",
+    "cway_hierarchy": "LOCAL CBD",
+    "urban_rural": "Urban",
+    "road_type_desc": "Local Authority",
+    "cway_area": "Hastings & Flaxmere",
+    "carrway_asset_owner": "Local Authority",
+    "length": 0.32
+  },
+  {
+    "major_surface_type": "Chipseal",
+    "onrc": "Primary Collector",
+    "cway_hierarchy": "REGION ARTERIAL",
+    "urban_rural": "Rural",
+    "road_type_desc": "Local Authority",
+    "cway_area": "Heretaunga",
+    "carrway_asset_owner": "Local Authority",
+    "length": 9.798
+  },
+  {
+    "major_surface_type": "Chipseal",
+    "onrc": "Primary Collector",
+    "cway_hierarchy": "REGION ARTERIAL",
+    "urban_rural": "Rural",
+    "road_type_desc": "Local Authority",
+    "cway_area": "Kaweka",
+    "carrway_asset_owner": "Local Authority",
+    "length": 7.85
+  },
+  {
+    "major_surface_type": "Chipseal",
+    "onrc": "Primary Collector",
+    "cway_hierarchy": "REGION ARTERIAL",
+    "urban_rural": "Rural",
+    "road_type_desc": "Local Authority",
+    "cway_area": "Poukawa",
+    "carrway_asset_owner": "Local Authority",
+    "length": 5.481
+  },
+  {
+    "major_surface_type": "Chipseal",
+    "onrc": "Primary Collector",
+    "cway_hierarchy": "REGION ARTERIAL",
+    "urban_rural": "Urban",
+    "road_type_desc": "Local Authority",
+    "cway_area": "Hastings & Flaxmere",
+    "carrway_asset_owner": "Local Authority",
+    "length": 1.383
+  },
+  {
+    "major_surface_type": "Chipseal",
+    "onrc": "Primary Collector",
+    "cway_hierarchy": "REGION ARTERIAL",
+    "urban_rural": "Urban",
+    "road_type_desc": "Local Authority",
+    "cway_area": "Heretaunga",
+    "carrway_asset_owner": "Local Authority",
+    "length": 0.831
+  },
+  {
+    "major_surface_type": "Chipseal",
+    "onrc": "Primary Collector",
+    "cway_hierarchy": "REGION ARTERIAL",
+    "urban_rural": "Urban",
+    "road_type_desc": "Local Authority",
+    "cway_area": "Kaweka",
+    "carrway_asset_owner": "Local Authority",
+    "length": 0.827
+  },
+  {
+    "major_surface_type": "Chipseal",
+    "onrc": "Secondary Collector",
+    "cway_hierarchy": "ARTERIAL",
+    "urban_rural": "Rural",
+    "road_type_desc": "Local Authority",
+    "cway_area": "Kaweka",
+    "carrway_asset_owner": "Local Authority",
+    "length": 15.473
+  },
+  {
+    "major_surface_type": "Chipseal",
+    "onrc": "Secondary Collector",
+    "cway_hierarchy": "ARTERIAL",
+    "urban_rural": "Rural",
+    "road_type_desc": "Local Authority",
+    "cway_area": "Maraekakaho",
+    "carrway_asset_owner": "Local Authority",
+    "length": 4.969
+  },
+  {
+    "major_surface_type": "Chipseal",
+    "onrc": "Secondary Collector",
+    "cway_hierarchy": "ARTERIAL",
+    "urban_rural": "Rural",
+    "road_type_desc": "Local Authority",
+    "cway_area": "Poukawa",
+    "carrway_asset_owner": "Local Authority",
+    "length": 31.834
+  },
+  {
+    "major_surface_type": "Chipseal",
+    "onrc": "Secondary Collector",
+    "cway_hierarchy": "ARTERIAL",
+    "urban_rural": "Urban",
+    "road_type_desc": "Local Authority",
+    "cway_area": "Hastings & Flaxmere",
+    "carrway_asset_owner": "Local Authority",
+    "length": 0.301
+  },
+  {
+    "major_surface_type": "Chipseal",
+    "onrc": "Secondary Collector",
+    "cway_hierarchy": "ARTERIAL",
+    "urban_rural": "Urban",
+    "road_type_desc": "Local Authority",
+    "cway_area": "Kaweka",
+    "carrway_asset_owner": "Local Authority",
+    "length": 0.35
+  },
+  {
+    "major_surface_type": "Chipseal",
+    "onrc": "Secondary Collector",
+    "cway_hierarchy": "ARTERIAL",
+    "urban_rural": "Urban",
+    "road_type_desc": "Local Authority",
+    "cway_area": "Maraekakaho",
+    "carrway_asset_owner": "Local Authority",
+    "length": 0.579
+  },
+  {
+    "major_surface_type": "Chipseal",
+    "onrc": "Secondary Collector",
+    "cway_hierarchy": "COLLECTOR",
+    "urban_rural": "Rural",
+    "road_type_desc": "Local Authority",
+    "cway_area": "Clive",
+    "carrway_asset_owner": "Local Authority",
+    "length": 1.605
+  },
+  {
+    "major_surface_type": "Chipseal",
+    "onrc": "Secondary Collector",
+    "cway_hierarchy": "COLLECTOR",
+    "urban_rural": "Rural",
+    "road_type_desc": "Local Authority",
+    "cway_area": "Havelock North",
+    "carrway_asset_owner": "Local Authority",
+    "length": 0.732
+  },
+  {
+    "major_surface_type": "Chipseal",
+    "onrc": "Secondary Collector",
+    "cway_hierarchy": "COLLECTOR",
+    "urban_rural": "Rural",
+    "road_type_desc": "Local Authority",
+    "cway_area": "Heretaunga",
+    "carrway_asset_owner": "Local Authority",
+    "length": 2.293
+  },
+  {
+    "major_surface_type": "Chipseal",
+    "onrc": "Secondary Collector",
+    "cway_hierarchy": "COLLECTOR",
+    "urban_rural": "Rural",
+    "road_type_desc": "Local Authority",
+    "cway_area": "Kaweka",
+    "carrway_asset_owner": "Local Authority",
+    "length": 25.89
+  },
+  {
+    "major_surface_type": "Chipseal",
+    "onrc": "Secondary Collector",
+    "cway_hierarchy": "COLLECTOR",
+    "urban_rural": "Rural",
+    "road_type_desc": "Local Authority",
+    "cway_area": "Maraekakaho",
+    "carrway_asset_owner": "Local Authority",
+    "length": 18.667
+  },
+  {
+    "major_surface_type": "Chipseal",
+    "onrc": "Secondary Collector",
+    "cway_hierarchy": "COLLECTOR",
+    "urban_rural": "Rural",
+    "road_type_desc": "Local Authority",
+    "cway_area": "Poukawa",
+    "carrway_asset_owner": "Local Authority",
+    "length": 16.289
+  },
+  {
+    "major_surface_type": "Chipseal",
+    "onrc": "Secondary Collector",
+    "cway_hierarchy": "COLLECTOR",
+    "urban_rural": "Rural",
+    "road_type_desc": "Local Authority",
+    "cway_area": "Tutira",
+    "carrway_asset_owner": "Local Authority",
+    "length": 8.797
+  },
+  {
+    "major_surface_type": "Chipseal",
+    "onrc": "Secondary Collector",
+    "cway_hierarchy": "COLLECTOR",
+    "urban_rural": "Urban",
+    "road_type_desc": "Local Authority",
+    "cway_area": "Clive",
+    "carrway_asset_owner": "Local Authority",
+    "length": 2.301
+  },
+  {
+    "major_surface_type": "Chipseal",
+    "onrc": "Secondary Collector",
+    "cway_hierarchy": "COLLECTOR",
+    "urban_rural": "Urban",
+    "road_type_desc": "Local Authority",
+    "cway_area": "Hastings & Flaxmere",
+    "carrway_asset_owner": "Local Authority",
+    "length": 6.919
+  },
+  {
+    "major_surface_type": "Chipseal",
+    "onrc": "Secondary Collector",
+    "cway_hierarchy": "COLLECTOR",
+    "urban_rural": "Urban",
+    "road_type_desc": "Local Authority",
+    "cway_area": "Havelock North",
+    "carrway_asset_owner": "Local Authority",
+    "length": 3.608
+  },
+  {
+    "major_surface_type": "Chipseal",
+    "onrc": "Secondary Collector",
+    "cway_hierarchy": "COLLECTOR",
+    "urban_rural": "Urban",
+    "road_type_desc": "Local Authority",
+    "cway_area": "Heretaunga",
+    "carrway_asset_owner": "Local Authority",
+    "length": 0.58
+  },
+  {
+    "major_surface_type": "Chipseal",
+    "onrc": "Secondary Collector",
+    "cway_hierarchy": "COLLECTOR",
+    "urban_rural": "Urban",
+    "road_type_desc": "Local Authority",
+    "carrway_asset_owner": "Local Authority",
+    "length": 3.531
+  },
+  {
+    "major_surface_type": "Chipseal",
+    "onrc": "Secondary Collector",
+    "cway_hierarchy": "LOCAL",
+    "urban_rural": "Rural",
+    "road_type_desc": "Local Authority",
+    "cway_area": "Clive",
+    "carrway_asset_owner": "Local Authority",
+    "length": 15.148
+  },
+  {
+    "major_surface_type": "Chipseal",
+    "onrc": "Secondary Collector",
+    "cway_hierarchy": "LOCAL",
+    "urban_rural": "Rural",
+    "road_type_desc": "Local Authority",
+    "cway_area": "Hastings & Flaxmere",
+    "carrway_asset_owner": "Local Authority",
+    "length": 0.741
+  },
+  {
+    "major_surface_type": "Chipseal",
+    "onrc": "Secondary Collector",
+    "cway_hierarchy": "LOCAL",
+    "urban_rural": "Rural",
+    "road_type_desc": "Local Authority",
+    "cway_area": "Havelock North",
+    "carrway_asset_owner": "Local Authority",
+    "length": 0.315
+  },
+  {
+    "major_surface_type": "Chipseal",
+    "onrc": "Secondary Collector",
+    "cway_hierarchy": "LOCAL",
+    "urban_rural": "Rural",
+    "road_type_desc": "Local Authority",
+    "cway_area": "Heretaunga",
+    "carrway_asset_owner": "Local Authority",
+    "length": 25.442
+  },
+  {
+    "major_surface_type": "Chipseal",
+    "onrc": "Secondary Collector",
+    "cway_hierarchy": "LOCAL",
+    "urban_rural": "Rural",
+    "road_type_desc": "Local Authority",
+    "cway_area": "Kaweka",
+    "carrway_asset_owner": "Local Authority",
+    "length": 32.333
+  },
+  {
+    "major_surface_type": "Chipseal",
+    "onrc": "Secondary Collector",
+    "cway_hierarchy": "LOCAL",
+    "urban_rural": "Rural",
+    "road_type_desc": "Local Authority",
+    "cway_area": "Maraekakaho",
+    "carrway_asset_owner": "Local Authority",
+    "length": 11.961
+  },
+  {
+    "major_surface_type": "Chipseal",
+    "onrc": "Secondary Collector",
+    "cway_hierarchy": "LOCAL",
+    "urban_rural": "Rural",
+    "road_type_desc": "Local Authority",
+    "cway_area": "Poukawa",
+    "carrway_asset_owner": "Local Authority",
+    "length": 28.822
+  },
+  {
+    "major_surface_type": "Chipseal",
+    "onrc": "Secondary Collector",
+    "cway_hierarchy": "LOCAL",
+    "urban_rural": "Rural",
+    "road_type_desc": "Local Authority",
+    "cway_area": "Tutira",
+    "carrway_asset_owner": "Local Authority",
+    "length": 19.891
+  },
+  {
+    "major_surface_type": "Chipseal",
+    "onrc": "Secondary Collector",
+    "cway_hierarchy": "LOCAL",
+    "urban_rural": "Urban",
+    "road_type_desc": "Local Authority",
+    "cway_area": "Clive",
+    "carrway_asset_owner": "Local Authority",
+    "length": 1.457
+  },
+  {
+    "major_surface_type": "Chipseal",
+    "onrc": "Secondary Collector",
+    "cway_hierarchy": "LOCAL",
+    "urban_rural": "Urban",
+    "road_type_desc": "Local Authority",
+    "cway_area": "Hastings & Flaxmere",
+    "carrway_asset_owner": "Local Authority",
+    "length": 23.288
+  },
+  {
+    "major_surface_type": "Chipseal",
+    "onrc": "Secondary Collector",
+    "cway_hierarchy": "LOCAL",
+    "urban_rural": "Urban",
+    "road_type_desc": "Local Authority",
+    "cway_area": "Havelock North",
+    "carrway_asset_owner": "Local Authority",
+    "length": 6.967
+  },
+  {
+    "major_surface_type": "Chipseal",
+    "onrc": "Secondary Collector",
+    "cway_hierarchy": "LOCAL",
+    "urban_rural": "Urban",
+    "road_type_desc": "Local Authority",
+    "cway_area": "Heretaunga",
+    "carrway_asset_owner": "Local Authority",
+    "length": 2.759
+  },
+  {
+    "major_surface_type": "Chipseal",
+    "onrc": "Secondary Collector",
+    "cway_hierarchy": "LOCAL",
+    "urban_rural": "Urban",
+    "road_type_desc": "Local Authority",
+    "cway_area": "Kaweka",
+    "carrway_asset_owner": "Local Authority",
+    "length": 0.409
+  },
+  {
+    "major_surface_type": "Chipseal",
+    "onrc": "Secondary Collector",
+    "cway_hierarchy": "LOCAL",
+    "urban_rural": "Urban",
+    "road_type_desc": "Local Authority",
+    "carrway_asset_owner": "Local Authority",
+    "length": 3.859
+  },
+  {
+    "major_surface_type": "Chipseal",
+    "onrc": "Secondary Collector",
+    "cway_hierarchy": "LOCAL CBD",
+    "urban_rural": "Urban",
+    "road_type_desc": "Local Authority",
+    "cway_area": "Hastings & Flaxmere",
+    "carrway_asset_owner": "Local Authority",
+    "length": 1.586
+  },
+  {
+    "major_surface_type": "Chipseal",
+    "onrc": "Secondary Collector",
+    "cway_hierarchy": "REGION ARTERIAL",
+    "urban_rural": "Rural",
+    "road_type_desc": "Local Authority",
+    "cway_area": "Kaweka",
+    "carrway_asset_owner": "Local Authority",
+    "length": 47.58
+  },
+  {
+    "major_surface_type": "Chipseal",
+    "onrc": "Unknown",
+    "cway_hierarchy": "ARTERIAL",
+    "urban_rural": "Urban",
+    "road_type_desc": "Local Authority",
+    "cway_area": "Clive",
+    "carrway_asset_owner": "Local Authority",
+    "length": 0.157
+  },
+  {
+    "major_surface_type": "Chipseal",
+    "onrc": "Unknown",
+    "cway_hierarchy": "COLLECTOR",
+    "urban_rural": "Rural",
+    "road_type_desc": "Local Authority",
+    "cway_area": "Heretaunga",
+    "carrway_asset_owner": "Local Authority",
+    "length": 0.565
+  },
+  {
+    "major_surface_type": "Chipseal",
+    "onrc": "Unknown",
+    "cway_hierarchy": "LOCAL",
+    "urban_rural": "Rural",
+    "road_type_desc": "Local Authority",
+    "cway_area": "Clive",
+    "carrway_asset_owner": "Private",
+    "length": 0.198
+  },
+  {
+    "major_surface_type": "Chipseal",
+    "onrc": "Unknown",
+    "cway_hierarchy": "LOCAL",
+    "urban_rural": "Rural",
+    "road_type_desc": "Local Authority",
+    "cway_area": "Kaweka",
+    "carrway_asset_owner": "Local Authority",
+    "length": 0.328
+  },
+  {
+    "major_surface_type": "Chipseal",
+    "onrc": "Unknown",
+    "cway_hierarchy": "LOCAL",
+    "urban_rural": "Rural",
+    "road_type_desc": "Local Authority",
+    "cway_area": "Tutira",
+    "carrway_asset_owner": "Local Authority",
+    "length": 0.03
+  },
+  {
+    "major_surface_type": "Chipseal",
+    "onrc": "Unknown",
+    "cway_hierarchy": "LOCAL",
+    "urban_rural": "Rural",
+    "road_type_desc": "Private Development",
+    "cway_area": "Havelock North",
+    "carrway_asset_owner": "Private",
+    "length": 0.009
+  },
+  {
+    "major_surface_type": "Chipseal",
+    "onrc": "Unknown",
+    "cway_hierarchy": "LOCAL",
+    "urban_rural": "Urban",
+    "road_type_desc": "Local Authority",
+    "cway_area": "Hastings & Flaxmere",
+    "carrway_asset_owner": "Local Authority",
+    "length": 0.554
+  },
+  {
+    "major_surface_type": "Chipseal",
+    "onrc": "Unknown",
+    "cway_hierarchy": "LOCAL",
+    "urban_rural": "Urban",
+    "road_type_desc": "Local Authority",
+    "cway_area": "Havelock North",
+    "carrway_asset_owner": "Local Authority",
+    "length": 0.055
+  },
+  {
+    "major_surface_type": "Chipseal",
+    "onrc": "Unknown",
+    "cway_hierarchy": "LOCAL",
+    "urban_rural": "Urban",
+    "road_type_desc": "Private Development",
+    "cway_area": "Hastings & Flaxmere",
+    "carrway_asset_owner": "Private",
+    "length": 0.064
+  },
+  {
+    "major_surface_type": "Chipseal",
+    "onrc": "Unknown",
+    "cway_hierarchy": "LOCAL CBD",
+    "urban_rural": "Urban",
+    "road_type_desc": "Car Park",
+    "cway_area": "Hastings & Flaxmere",
+    "carrway_asset_owner": "Local Authority",
+    "length": 0.136
+  },
+  {
+    "major_surface_type": "Chipseal",
+    "onrc": "Unknown",
+    "cway_hierarchy": "LOCAL CBD",
+    "urban_rural": "Urban",
+    "road_type_desc": "Car Park",
+    "cway_area": "Havelock North",
+    "carrway_asset_owner": "Local Authority",
+    "length": 0.257
+  },
+  {
+    "major_surface_type": "Chipseal",
+    "onrc": "Unknown",
+    "cway_hierarchy": "LOCAL CBD",
+    "urban_rural": "Urban",
+    "road_type_desc": "Service Lane",
+    "cway_area": "Havelock North",
+    "carrway_asset_owner": "Local Authority",
+    "length": 0.175
+  },
+  {
+    "major_surface_type": "Chipseal",
+    "onrc": "Unknown",
+    "urban_rural": "Urban",
+    "road_type_desc": "Car Park",
+    "cway_area": "Hastings & Flaxmere",
+    "carrway_asset_owner": "Local Authority",
+    "length": 0.634
+  },
+  {
+    "major_surface_type": "Chipseal",
+    "onrc": "Unknown",
+    "urban_rural": "Urban",
+    "road_type_desc": "Car Park",
+    "cway_area": "Havelock North",
+    "carrway_asset_owner": "Local Authority",
+    "length": 0.078
+  },
+  {
+    "major_surface_type": "Chipseal",
+    "onrc": "Unknown",
+    "urban_rural": "Urban",
+    "road_type_desc": "Private Development",
+    "carrway_asset_owner": "Private",
+    "length": 0.076
+  },
+  {
+    "major_surface_type": "voidfill",
+    "onrc": "Access",
+    "cway_hierarchy": "COLLECTOR",
+    "urban_rural": "Rural",
+    "road_type_desc": "Local Authority",
+    "cway_area": "Maraekakaho",
+    "carrway_asset_owner": "Local Authority",
+    "length": 0.902
+  },
+  {
+    "major_surface_type": "voidfill",
+    "onrc": "Access",
+    "cway_hierarchy": "COLLECTOR",
+    "urban_rural": "Rural",
+    "road_type_desc": "Local Authority",
+    "cway_area": "Tutira",
+    "carrway_asset_owner": "Local Authority",
+    "length": 3.183
+  },
+  {
+    "major_surface_type": "voidfill",
+    "onrc": "Access",
+    "cway_hierarchy": "COLLECTOR",
+    "urban_rural": "Urban",
+    "road_type_desc": "Local Authority",
+    "cway_area": "Maraekakaho",
+    "carrway_asset_owner": "Local Authority",
+    "length": 0.184
+  },
+  {
+    "major_surface_type": "voidfill",
+    "onrc": "Access",
+    "cway_hierarchy": "LOCAL",
+    "urban_rural": "Rural",
+    "road_type_desc": "Local Authority",
+    "cway_area": "Clive",
+    "carrway_asset_owner": "Local Authority",
+    "length": 1.081
+  },
+  {
+    "major_surface_type": "voidfill",
+    "onrc": "Access",
+    "cway_hierarchy": "LOCAL",
+    "urban_rural": "Rural",
+    "road_type_desc": "Local Authority",
+    "cway_area": "Heretaunga",
+    "carrway_asset_owner": "Local Authority",
+    "length": 1.807
+  },
+  {
+    "major_surface_type": "voidfill",
+    "onrc": "Access",
+    "cway_hierarchy": "LOCAL",
+    "urban_rural": "Rural",
+    "road_type_desc": "Local Authority",
+    "cway_area": "Kaweka",
+    "carrway_asset_owner": "Local Authority",
+    "length": 19.165
+  },
+  {
+    "major_surface_type": "voidfill",
+    "onrc": "Access",
+    "cway_hierarchy": "LOCAL",
+    "urban_rural": "Rural",
+    "road_type_desc": "Local Authority",
+    "cway_area": "Maraekakaho",
+    "carrway_asset_owner": "Local Authority",
+    "length": 5.49
+  },
+  {
+    "major_surface_type": "voidfill",
+    "onrc": "Access",
+    "cway_hierarchy": "LOCAL",
+    "urban_rural": "Rural",
+    "road_type_desc": "Local Authority",
+    "cway_area": "Poukawa",
+    "carrway_asset_owner": "Local Authority",
+    "length": 5.712
+  },
+  {
+    "major_surface_type": "voidfill",
+    "onrc": "Access",
+    "cway_hierarchy": "LOCAL",
+    "urban_rural": "Rural",
+    "road_type_desc": "Local Authority",
+    "cway_area": "Tutira",
+    "carrway_asset_owner": "Local Authority",
+    "length": 7.23
+  },
+  {
+    "major_surface_type": "voidfill",
+    "onrc": "Access",
+    "cway_hierarchy": "LOCAL",
+    "urban_rural": "Urban",
+    "road_type_desc": "Local Authority",
+    "cway_area": "Clive",
+    "carrway_asset_owner": "Local Authority",
+    "length": 2.185
+  },
+  {
+    "major_surface_type": "voidfill",
+    "onrc": "Access",
+    "cway_hierarchy": "LOCAL",
+    "urban_rural": "Urban",
+    "road_type_desc": "Local Authority",
+    "cway_area": "Hastings & Flaxmere",
+    "carrway_asset_owner": "Local Authority",
+    "length": 9.961
+  },
+  {
+    "major_surface_type": "voidfill",
+    "onrc": "Access",
+    "cway_hierarchy": "LOCAL",
+    "urban_rural": "Urban",
+    "road_type_desc": "Local Authority",
+    "cway_area": "Havelock North",
+    "carrway_asset_owner": "Local Authority",
+    "length": 4.234
+  },
+  {
+    "major_surface_type": "voidfill",
+    "onrc": "Access",
+    "cway_hierarchy": "LOCAL",
+    "urban_rural": "Urban",
+    "road_type_desc": "Local Authority",
+    "cway_area": "Heretaunga",
+    "carrway_asset_owner": "Local Authority",
+    "length": 0.022
+  },
+  {
+    "major_surface_type": "voidfill",
+    "onrc": "Access",
+    "cway_hierarchy": "LOCAL",
+    "urban_rural": "Urban",
+    "road_type_desc": "Local Authority",
+    "cway_area": "Poukawa",
+    "carrway_asset_owner": "Local Authority",
+    "length": 2.35
+  },
+  {
+    "major_surface_type": "voidfill",
+    "onrc": "Access",
+    "cway_hierarchy": "LOCAL",
+    "urban_rural": "Urban",
+    "road_type_desc": "Local Authority",
+    "carrway_asset_owner": "Local Authority",
+    "length": 3.281
+  },
+  {
+    "major_surface_type": "voidfill",
+    "onrc": "Access",
+    "cway_hierarchy": "LOCAL CBD",
+    "urban_rural": "Urban",
+    "road_type_desc": "Local Authority",
+    "cway_area": "Havelock North",
+    "carrway_asset_owner": "Local Authority",
+    "length": 0.103
+  },
+  {
+    "major_surface_type": "voidfill",
+    "onrc": "Arterial",
+    "cway_hierarchy": "ARTERIAL",
+    "urban_rural": "Rural",
+    "road_type_desc": "Local Authority",
+    "cway_area": "Heretaunga",
+    "carrway_asset_owner": "Local Authority",
+    "length": 0.935
+  },
+  {
+    "major_surface_type": "voidfill",
+    "onrc": "Arterial",
+    "cway_hierarchy": "ARTERIAL",
+    "urban_rural": "Urban",
+    "road_type_desc": "Local Authority",
+    "cway_area": "Hastings & Flaxmere",
+    "carrway_asset_owner": "Local Authority",
+    "length": 0.284
+  },
+  {
+    "major_surface_type": "voidfill",
+    "onrc": "Arterial",
+    "cway_hierarchy": "COLLECTOR",
+    "urban_rural": "Urban",
+    "road_type_desc": "Local Authority",
+    "cway_area": "Hastings & Flaxmere",
+    "carrway_asset_owner": "Local Authority",
+    "length": 0.143
+  },
+  {
+    "major_surface_type": "voidfill",
+    "onrc": "Arterial",
+    "cway_hierarchy": "REGION ARTERIAL",
+    "urban_rural": "Urban",
+    "road_type_desc": "Local Authority",
+    "cway_area": "Hastings & Flaxmere",
+    "carrway_asset_owner": "Local Authority",
+    "length": 2.074
+  },
+  {
+    "major_surface_type": "voidfill",
+    "onrc": "Low Volume",
+    "cway_hierarchy": "LOCAL",
+    "urban_rural": "Rural",
+    "road_type_desc": "Local Authority",
+    "cway_area": "Clive",
+    "carrway_asset_owner": "Local Authority",
+    "length": 1.019
+  },
+  {
+    "major_surface_type": "voidfill",
+    "onrc": "Low Volume",
+    "cway_hierarchy": "LOCAL",
+    "urban_rural": "Rural",
+    "road_type_desc": "Local Authority",
+    "cway_area": "Havelock North",
+    "carrway_asset_owner": "Local Authority",
+    "length": 0.054
+  },
+  {
+    "major_surface_type": "voidfill",
+    "onrc": "Low Volume",
+    "cway_hierarchy": "LOCAL",
+    "urban_rural": "Rural",
+    "road_type_desc": "Local Authority",
+    "cway_area": "Heretaunga",
+    "carrway_asset_owner": "Local Authority",
+    "length": 2.712
+  },
+  {
+    "major_surface_type": "voidfill",
+    "onrc": "Low Volume",
+    "cway_hierarchy": "LOCAL",
+    "urban_rural": "Rural",
+    "road_type_desc": "Local Authority",
+    "cway_area": "Kaweka",
+    "carrway_asset_owner": "Local Authority",
+    "length": 3.38
+  },
+  {
+    "major_surface_type": "voidfill",
+    "onrc": "Low Volume",
+    "cway_hierarchy": "LOCAL",
+    "urban_rural": "Rural",
+    "road_type_desc": "Local Authority",
+    "cway_area": "Maraekakaho",
+    "carrway_asset_owner": "Local Authority",
+    "length": 6.536
+  },
+  {
+    "major_surface_type": "voidfill",
+    "onrc": "Low Volume",
+    "cway_hierarchy": "LOCAL",
+    "urban_rural": "Rural",
+    "road_type_desc": "Local Authority",
+    "cway_area": "Poukawa",
+    "carrway_asset_owner": "Local Authority",
+    "length": 6.41
+  },
+  {
+    "major_surface_type": "voidfill",
+    "onrc": "Low Volume",
+    "cway_hierarchy": "LOCAL",
+    "urban_rural": "Rural",
+    "road_type_desc": "Local Authority",
+    "cway_area": "Tutira",
+    "carrway_asset_owner": "Local Authority",
+    "length": 5.248
+  },
+  {
+    "major_surface_type": "voidfill",
+    "onrc": "Low Volume",
+    "cway_hierarchy": "LOCAL",
+    "urban_rural": "Urban",
+    "road_type_desc": "Local Authority",
+    "cway_area": "Clive",
+    "carrway_asset_owner": "Local Authority",
+    "length": 2.898
+  },
+  {
+    "major_surface_type": "voidfill",
+    "onrc": "Low Volume",
+    "cway_hierarchy": "LOCAL",
+    "urban_rural": "Urban",
+    "road_type_desc": "Local Authority",
+    "cway_area": "Hastings & Flaxmere",
+    "carrway_asset_owner": "Local Authority",
+    "length": 5.05
+  },
+  {
+    "major_surface_type": "voidfill",
+    "onrc": "Low Volume",
+    "cway_hierarchy": "LOCAL",
+    "urban_rural": "Urban",
+    "road_type_desc": "Local Authority",
+    "cway_area": "Havelock North",
+    "carrway_asset_owner": "Local Authority",
+    "length": 2.457
+  },
+  {
+    "major_surface_type": "voidfill",
+    "onrc": "Low Volume",
+    "cway_hierarchy": "LOCAL",
+    "urban_rural": "Urban",
+    "road_type_desc": "Local Authority",
+    "cway_area": "Heretaunga",
+    "carrway_asset_owner": "Local Authority",
+    "length": 0.318
+  },
+  {
+    "major_surface_type": "voidfill",
+    "onrc": "Low Volume",
+    "cway_hierarchy": "LOCAL",
+    "urban_rural": "Urban",
+    "road_type_desc": "Local Authority",
+    "cway_area": "Poukawa",
+    "carrway_asset_owner": "Local Authority",
+    "length": 2.138
+  },
+  {
+    "major_surface_type": "voidfill",
+    "onrc": "Low Volume",
+    "cway_hierarchy": "LOCAL",
+    "urban_rural": "Urban",
+    "road_type_desc": "Local Authority",
+    "cway_area": "Tutira",
+    "carrway_asset_owner": "Local Authority",
+    "length": 0.157
+  },
+  {
+    "major_surface_type": "voidfill",
+    "onrc": "Low Volume",
+    "cway_hierarchy": "LOCAL",
+    "urban_rural": "Urban",
+    "road_type_desc": "Local Authority",
+    "carrway_asset_owner": "Local Authority",
+    "length": 1.241
+  },
+  {
+    "major_surface_type": "voidfill",
+    "onrc": "Primary Collector",
+    "cway_hierarchy": "ARTERIAL",
+    "urban_rural": "Rural",
+    "road_type_desc": "Local Authority",
+    "cway_area": "Clive",
+    "carrway_asset_owner": "Local Authority",
+    "length": 0.171
+  },
+  {
+    "major_surface_type": "voidfill",
+    "onrc": "Primary Collector",
+    "cway_hierarchy": "ARTERIAL",
+    "urban_rural": "Rural",
+    "road_type_desc": "Local Authority",
+    "cway_area": "Hastings & Flaxmere",
+    "carrway_asset_owner": "Local Authority",
+    "length": 0.177
+  },
+  {
+    "major_surface_type": "voidfill",
+    "onrc": "Primary Collector",
+    "cway_hierarchy": "ARTERIAL",
+    "urban_rural": "Rural",
+    "road_type_desc": "Local Authority",
+    "cway_area": "Heretaunga",
+    "carrway_asset_owner": "Local Authority",
+    "length": 0.607
+  },
+  {
+    "major_surface_type": "voidfill",
+    "onrc": "Primary Collector",
+    "cway_hierarchy": "ARTERIAL",
+    "urban_rural": "Urban",
+    "road_type_desc": "Local Authority",
+    "cway_area": "Hastings & Flaxmere",
+    "carrway_asset_owner": "Local Authority",
+    "length": 0.484
+  },
+  {
+    "major_surface_type": "voidfill",
+    "onrc": "Primary Collector",
+    "cway_hierarchy": "ARTERIAL",
+    "urban_rural": "Urban",
+    "road_type_desc": "Local Authority",
+    "cway_area": "Havelock North",
+    "carrway_asset_owner": "Local Authority",
+    "length": 0.053
+  },
+  {
+    "major_surface_type": "voidfill",
+    "onrc": "Primary Collector",
+    "cway_hierarchy": "ARTERIAL",
+    "urban_rural": "Urban",
+    "road_type_desc": "Local Authority",
+    "cway_area": "Heretaunga",
+    "carrway_asset_owner": "Local Authority",
+    "length": 0.185
+  },
+  {
+    "major_surface_type": "voidfill",
+    "onrc": "Primary Collector",
+    "cway_hierarchy": "ARTERIAL",
+    "urban_rural": "Urban",
+    "road_type_desc": "Local Authority",
+    "carrway_asset_owner": "Local Authority",
+    "length": 0.003
+  },
+  {
+    "major_surface_type": "voidfill",
+    "onrc": "Primary Collector",
+    "cway_hierarchy": "COLLECTOR",
+    "urban_rural": "Rural",
+    "road_type_desc": "Local Authority",
+    "cway_area": "Clive",
+    "carrway_asset_owner": "Local Authority",
+    "length": 0.233
+  },
+  {
+    "major_surface_type": "voidfill",
+    "onrc": "Primary Collector",
+    "cway_hierarchy": "COLLECTOR",
+    "urban_rural": "Rural",
+    "road_type_desc": "Local Authority",
+    "cway_area": "Heretaunga",
+    "carrway_asset_owner": "Local Authority",
+    "length": 0.866
+  },
+  {
+    "major_surface_type": "voidfill",
+    "onrc": "Primary Collector",
+    "cway_hierarchy": "COLLECTOR",
+    "urban_rural": "Rural",
+    "road_type_desc": "Local Authority",
+    "cway_area": "Maraekakaho",
+    "carrway_asset_owner": "Local Authority",
+    "length": 0.02
+  },
+  {
+    "major_surface_type": "voidfill",
+    "onrc": "Primary Collector",
+    "cway_hierarchy": "COLLECTOR",
+    "urban_rural": "Urban",
+    "road_type_desc": "Local Authority",
+    "cway_area": "Hastings & Flaxmere",
+    "carrway_asset_owner": "Local Authority",
+    "length": 1.336
+  },
+  {
+    "major_surface_type": "voidfill",
+    "onrc": "Primary Collector",
+    "cway_hierarchy": "COLLECTOR",
+    "urban_rural": "Urban",
+    "road_type_desc": "Local Authority",
+    "carrway_asset_owner": "Local Authority",
+    "length": 0.925
+  },
+  {
+    "major_surface_type": "voidfill",
+    "onrc": "Primary Collector",
+    "cway_hierarchy": "LOCAL",
+    "urban_rural": "Urban",
+    "road_type_desc": "Local Authority",
+    "cway_area": "Clive",
+    "carrway_asset_owner": "Local Authority",
+    "length": 0.294
+  },
+  {
+    "major_surface_type": "voidfill",
+    "onrc": "Primary Collector",
+    "cway_hierarchy": "LOCAL CBD",
+    "urban_rural": "Urban",
+    "road_type_desc": "Local Authority",
+    "cway_area": "Hastings & Flaxmere",
+    "carrway_asset_owner": "Local Authority",
+    "length": 0.048
+  },
+  {
+    "major_surface_type": "voidfill",
+    "onrc": "Primary Collector",
+    "cway_hierarchy": "REGION ARTERIAL",
+    "urban_rural": "Rural",
+    "road_type_desc": "Local Authority",
+    "cway_area": "Heretaunga",
+    "carrway_asset_owner": "Local Authority",
+    "length": 0.055
+  },
+  {
+    "major_surface_type": "voidfill",
+    "onrc": "Primary Collector",
+    "cway_hierarchy": "REGION ARTERIAL",
+    "urban_rural": "Rural",
+    "road_type_desc": "Local Authority",
+    "cway_area": "Poukawa",
+    "carrway_asset_owner": "Local Authority",
+    "length": 2.374
+  },
+  {
+    "major_surface_type": "voidfill",
+    "onrc": "Primary Collector",
+    "cway_hierarchy": "REGION ARTERIAL",
+    "urban_rural": "Urban",
+    "road_type_desc": "Local Authority",
+    "cway_area": "Hastings & Flaxmere",
+    "carrway_asset_owner": "Local Authority",
+    "length": 0.013
+  },
+  {
+    "major_surface_type": "voidfill",
+    "onrc": "Primary Collector",
+    "cway_hierarchy": "REGION ARTERIAL",
+    "urban_rural": "Urban",
+    "road_type_desc": "Local Authority",
+    "cway_area": "Heretaunga",
+    "carrway_asset_owner": "Local Authority",
+    "length": 0.042
+  },
+  {
+    "major_surface_type": "voidfill",
+    "onrc": "Primary Collector",
+    "cway_hierarchy": "REGION ARTERIAL",
+    "urban_rural": "Urban",
+    "road_type_desc": "Local Authority",
+    "cway_area": "Kaweka",
+    "carrway_asset_owner": "Local Authority",
+    "length": 0.016
+  },
+  {
+    "major_surface_type": "voidfill",
+    "onrc": "Secondary Collector",
+    "cway_hierarchy": "ARTERIAL",
+    "urban_rural": "Rural",
+    "road_type_desc": "Local Authority",
+    "cway_area": "Kaweka",
+    "carrway_asset_owner": "Local Authority",
+    "length": 0.006
+  },
+  {
+    "major_surface_type": "voidfill",
+    "onrc": "Secondary Collector",
+    "cway_hierarchy": "ARTERIAL",
+    "urban_rural": "Rural",
+    "road_type_desc": "Local Authority",
+    "cway_area": "Poukawa",
+    "carrway_asset_owner": "Local Authority",
+    "length": 4.563
+  },
+  {
+    "major_surface_type": "voidfill",
+    "onrc": "Secondary Collector",
+    "cway_hierarchy": "COLLECTOR",
+    "urban_rural": "Rural",
+    "road_type_desc": "Local Authority",
+    "cway_area": "Heretaunga",
+    "carrway_asset_owner": "Local Authority",
+    "length": 0.045
+  },
+  {
+    "major_surface_type": "voidfill",
+    "onrc": "Secondary Collector",
+    "cway_hierarchy": "COLLECTOR",
+    "urban_rural": "Rural",
+    "road_type_desc": "Local Authority",
+    "cway_area": "Kaweka",
+    "carrway_asset_owner": "Local Authority",
+    "length": 0.901
+  },
+  {
+    "major_surface_type": "voidfill",
+    "onrc": "Secondary Collector",
+    "cway_hierarchy": "COLLECTOR",
+    "urban_rural": "Rural",
+    "road_type_desc": "Local Authority",
+    "cway_area": "Maraekakaho",
+    "carrway_asset_owner": "Local Authority",
+    "length": 1.555
+  },
+  {
+    "major_surface_type": "voidfill",
+    "onrc": "Secondary Collector",
+    "cway_hierarchy": "COLLECTOR",
+    "urban_rural": "Rural",
+    "road_type_desc": "Local Authority",
+    "cway_area": "Poukawa",
+    "carrway_asset_owner": "Local Authority",
+    "length": 3.521
+  },
+  {
+    "major_surface_type": "voidfill",
+    "onrc": "Secondary Collector",
+    "cway_hierarchy": "COLLECTOR",
+    "urban_rural": "Rural",
+    "road_type_desc": "Local Authority",
+    "cway_area": "Tutira",
+    "carrway_asset_owner": "Local Authority",
+    "length": 1.071
+  },
+  {
+    "major_surface_type": "voidfill",
+    "onrc": "Secondary Collector",
+    "cway_hierarchy": "COLLECTOR",
+    "urban_rural": "Urban",
+    "road_type_desc": "Local Authority",
+    "cway_area": "Clive",
+    "carrway_asset_owner": "Local Authority",
+    "length": 0.21
+  },
+  {
+    "major_surface_type": "voidfill",
+    "onrc": "Secondary Collector",
+    "cway_hierarchy": "COLLECTOR",
+    "urban_rural": "Urban",
+    "road_type_desc": "Local Authority",
+    "cway_area": "Hastings & Flaxmere",
+    "carrway_asset_owner": "Local Authority",
+    "length": 0.981
+  },
+  {
+    "major_surface_type": "voidfill",
+    "onrc": "Secondary Collector",
+    "cway_hierarchy": "COLLECTOR",
+    "urban_rural": "Urban",
+    "road_type_desc": "Local Authority",
+    "cway_area": "Heretaunga",
+    "carrway_asset_owner": "Local Authority",
+    "length": 0.011
+  },
+  {
+    "major_surface_type": "voidfill",
+    "onrc": "Secondary Collector",
+    "cway_hierarchy": "COLLECTOR",
+    "urban_rural": "Urban",
+    "road_type_desc": "Local Authority",
+    "carrway_asset_owner": "Local Authority",
+    "length": 0.851
+  },
+  {
+    "major_surface_type": "voidfill",
+    "onrc": "Secondary Collector",
+    "cway_hierarchy": "LOCAL",
+    "urban_rural": "Rural",
+    "road_type_desc": "Local Authority",
+    "cway_area": "Clive",
+    "carrway_asset_owner": "Local Authority",
+    "length": 0.031
+  },
+  {
+    "major_surface_type": "voidfill",
+    "onrc": "Secondary Collector",
+    "cway_hierarchy": "LOCAL",
+    "urban_rural": "Rural",
+    "road_type_desc": "Local Authority",
+    "cway_area": "Heretaunga",
+    "carrway_asset_owner": "Local Authority",
+    "length": 2.046
+  },
+  {
+    "major_surface_type": "voidfill",
+    "onrc": "Secondary Collector",
+    "cway_hierarchy": "LOCAL",
+    "urban_rural": "Rural",
+    "road_type_desc": "Local Authority",
+    "cway_area": "Kaweka",
+    "carrway_asset_owner": "Local Authority",
+    "length": 6.732
+  },
+  {
+    "major_surface_type": "voidfill",
+    "onrc": "Secondary Collector",
+    "cway_hierarchy": "LOCAL",
+    "urban_rural": "Rural",
+    "road_type_desc": "Local Authority",
+    "cway_area": "Maraekakaho",
+    "carrway_asset_owner": "Local Authority",
+    "length": 1.086
+  },
+  {
+    "major_surface_type": "voidfill",
+    "onrc": "Secondary Collector",
+    "cway_hierarchy": "LOCAL",
+    "urban_rural": "Rural",
+    "road_type_desc": "Local Authority",
+    "cway_area": "Tutira",
+    "carrway_asset_owner": "Local Authority",
+    "length": 0.069
+  },
+  {
+    "major_surface_type": "voidfill",
+    "onrc": "Secondary Collector",
+    "cway_hierarchy": "LOCAL",
+    "urban_rural": "Urban",
+    "road_type_desc": "Local Authority",
+    "cway_area": "Clive",
+    "carrway_asset_owner": "Local Authority",
+    "length": 0.6
+  },
+  {
+    "major_surface_type": "voidfill",
+    "onrc": "Secondary Collector",
+    "cway_hierarchy": "LOCAL",
+    "urban_rural": "Urban",
+    "road_type_desc": "Local Authority",
+    "cway_area": "Hastings & Flaxmere",
+    "carrway_asset_owner": "Local Authority",
+    "length": 2.808
+  },
+  {
+    "major_surface_type": "voidfill",
+    "onrc": "Secondary Collector",
+    "cway_hierarchy": "LOCAL",
+    "urban_rural": "Urban",
+    "road_type_desc": "Local Authority",
+    "cway_area": "Havelock North",
+    "carrway_asset_owner": "Local Authority",
+    "length": 1.795
+  },
+  {
+    "major_surface_type": "voidfill",
+    "onrc": "Secondary Collector",
+    "cway_hierarchy": "LOCAL",
+    "urban_rural": "Urban",
+    "road_type_desc": "Local Authority",
+    "cway_area": "Heretaunga",
+    "carrway_asset_owner": "Local Authority",
+    "length": 0.008
+  },
+  {
+    "major_surface_type": "voidfill",
+    "onrc": "Secondary Collector",
+    "cway_hierarchy": "LOCAL",
+    "urban_rural": "Urban",
+    "road_type_desc": "Local Authority",
+    "cway_area": "Kaweka",
+    "carrway_asset_owner": "Local Authority",
+    "length": 0.089
+  },
+  {
+    "major_surface_type": "voidfill",
+    "onrc": "Secondary Collector",
+    "cway_hierarchy": "LOCAL",
+    "urban_rural": "Urban",
+    "road_type_desc": "Local Authority",
+    "carrway_asset_owner": "Local Authority",
+    "length": 0.604
+  },
+  {
+    "major_surface_type": "voidfill",
+    "onrc": "Secondary Collector",
+    "cway_hierarchy": "LOCAL CBD",
+    "urban_rural": "Urban",
+    "road_type_desc": "Local Authority",
+    "cway_area": "Hastings & Flaxmere",
+    "carrway_asset_owner": "Local Authority",
+    "length": 0.017
+  },
+  {
+    "major_surface_type": "voidfill",
+    "onrc": "Secondary Collector",
+    "cway_hierarchy": "REGION ARTERIAL",
+    "urban_rural": "Rural",
+    "road_type_desc": "Local Authority",
+    "cway_area": "Kaweka",
+    "carrway_asset_owner": "Local Authority",
+    "length": 0.081
+  },
+  {
+    "major_surface_type": "voidfill",
+    "onrc": "Unknown",
+    "cway_hierarchy": "LOCAL",
+    "urban_rural": "Urban",
+    "road_type_desc": "Local Authority",
+    "cway_area": "Hastings & Flaxmere",
+    "carrway_asset_owner": "Local Authority",
+    "length": 0.071
+  }
+];
+
+        $(document).ready(function() {
+
+            cf = createCrossfilterObjects(data, defs);
+
+
+
+            defs.forEach(function(d) {
+                //console.log(d)
+                switch(d.chart_type) {
+                    case 'pie':
+                        createPieChart(d.chart_id, d.height);
+                        break;
+                    case 'row':
+                        createRowChart(d.chart_id, d.height, d.cap, d.tick);
+                        break;
+                    case 'ordinal-bar':
+                        createOrdinalBarChart(d.chart_id, d.height);
+                        break;
+                    case 'categorical-bar':
+                        createTestBarChart(d.chart_id, d.dimension, d.aggregate);
+                        break;
+
+                }
+                //test(d)
+            })
+
+            dc.renderAll();
+
+        });
+
+        function createCrossfilterObjects(source, defs) {
+
+            var _cf = { "cf": crossfilter(source), "dimensions": {}, "group_sums": {} };
+
+            defs.forEach(function(d) {
+                _cf.dimensions[d.chart_id] = _cf.cf.dimension(function(g) { return g[d.dimension]; });
+                _cf.group_sums[d.chart_id] = _cf.dimensions[d.chart_id].group().reduceSum(function(g) { return g[d.aggregate]; })
+            })
+
+            _cf.all = _cf.cf.groupAll().reduceSum(function(g) { return g[d.aggregate]; })
+
+            return _cf;
+        }
+
+        function createRowChart(chart_id, height, cap, tick) {
+            var chart = dc.rowChart("#" + chart_id);
+
+            chart
+                .margins({ top: 0, right: 10, bottom: 20, left: 5 })
+                .height(smart_height(cf.group_sums[chart_id].all().length,height,cap))
+                .dimension(cf.dimensions[chart_id])
+                .group(cf.group_sums[chart_id])
+                .transitionDuration(500)
+                .title(function(d) { return d.key + " : " + d3.format(".0f")(d.value); })
+                .elasticX(true)
+                .gap(1)
+                .xAxis().ticks(tick == 0 ? 4 : tick);
+
+           if (cap != 0){chart.cap(cap)}
+        }
+
+
+
+
+        function createPieChart(chart_id, height) {
+            var chart = dc.pieChart("#" + chart_id);
+
+            chart
+                .dimension(cf.dimensions[chart_id])
+                .height(height)
+                .group(cf.group_sums[chart_id])
+                .transitionDuration(500)
+                .innerRadius(50)
+                .legend(dc.legend())
+                .title(function(d) { return d.key + " : " + d3.format(".0f")(d.value); })
+
+        }
+
+        function createOrdinalBarChart(chart_id, height) {
+            var chart = dc.barChart("#" + chart_id);
+
+            var all_data = cf.group_sums[chart_id].all();
+            var a = d3.min(all_data, function(d) { return d.key;})
+            var b = d3.max(all_data, function(d) { return d.key;})
+
+            chart
+                .height(height)
+                .margins({ top: 10, right: 20, bottom: 20, left: 40 })
+                .dimension(cf.dimensions[chart_id])
+                .group(cf.group_sums[chart_id])
+                .transitionDuration(500)
+                .brushOn(true)
+                .x(d3.scale.linear().domain([a,b]))
+                .title(function(d) { return d.key + " : " + d3.format(".0f")(d.value); })
+
+        }
+
+        function createCategoricalBarChart(chart_id) {
+            var chart = dc.barChart("#" + chart_id);
+
+            var all_data = cf.group_sums[chart_id].all();
+            var a = d3.min(all_data, function(d) { return d.key;})
+            var b = d3.max(all_data, function(d) { return d.key;})
+
+            chart
+                .margins({ top: 0, right: 10, bottom: 20, left: 5 })
+                .dimension(cf.dimensions[chart_id])
+                .group(cf.group_sums[chart_id])
+                .transitionDuration(500)
+                .brushOn(true)
+                .x(d3.scale.ordinal().range([a,b]))
+                .title(function(d) { return d.key + " : " + d3.format(".0f")(d.value); })
+
+
+        }
+        //----------------
+        function test(d) {
+          var all_data = cf.group_sums[d.chart_id].all()
+          console.log(d)
+        }
+        //----------------
+
+        function createTestBarChart(chart_id, dimension) {
+            var chart = dc.barChart("#" + chart_id);
+            var test = data.length
+            var x_columns = []
+
+            for(i = 0; i < data.length; i++){
+              x_columns.push(data[i][dimension])
+            }
+
+            var uniq = x_columns
+            .map((x_column) => {
+              return {count: 1, x_column: x_column}
+            })
+            .reduce((a, b) => {
+              a[b.x_column] = (a[b.x_column] || 0) + b.count
+              return a
+            }, {})
+
+            var x_col = Object.keys(uniq).sort((a, b) => uniq[a] < uniq[b])
+
+            console.log(x_col)
+
+
+            var all_data = cf.group_sums[chart_id].all();
+
+            var x_test = all_data.keys(x_test)
+
+            console.log(all_data)
+
+            var test = function(d) { return d.key  }
+            //console.log(test[1])
+            chart
+            //.x(d3.scale.ordinal().domain(all_data))//.range(all_data)
+            .dimension(cf.dimensions[chart_id])
+            .group(cf.group_sums[chart_id])
+            .transitionDuration(500)
+            .elasticX(true)
+            .gap(1)
+            .xAxis().ticks(4);
+        }
+
+        function smart_height(count, height, cap){
+          var new_height = (height == 0 ? 200 : height)
+
+          count = (cap == 0 ? count : cap+1)
+          //console.log(new_height/count)
+          if (new_height/count < 17){
+            new_height =  (count+1) * 17
+          }
+
+          //testing
+          if (false){new_height =  (count+1) *  17}//forces  height
+          if (false){new_height = height } //resets to default height
+          //console.log (new_height/count)
+
+          return new_height
+        }
+
+        </script>
+    </div>
+</body>
+
+</html>
